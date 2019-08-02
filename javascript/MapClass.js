@@ -26,8 +26,8 @@ class Map{
      this.grassLeftTexture = [assets.grassLeft, 4, "grassLeft: 4"];
      this.grassRightTexture = [assets.grassRight, 5, "grassRight: 5"];
      this.grassFullTexture = [assets.grassFull, 6, "grassFull: 6"];
-     this.desk = [assets.schoolDesk, 8, "candle: 7"];
      this.candle = [assets.candle, 7, "candle: 7"];
+     this.desk = [assets.schoolDesk, 8, "candle: 7"];
 
      this.airBlocks = [this.grass1Texture[1],
      this.grass2Texture[1],
@@ -40,10 +40,10 @@ class Map{
      this.allBlocks = [];
      // this.allBlocks[0] = [0, 0]
      let assetsToArray = Object.values(assets);
-     for(let i = 0; i < assetsToArray.length; i++){
+     for(let i = 0; i < assetsToArray.length + 1; i++){
        this.allBlocks[i] = [assetsToArray[i], i];
      }
-     console.log(this.allBlocks);
+     console.log(this.allBlocks.length);
 
     this.scale = 50;
     this.y = 0;
@@ -86,6 +86,7 @@ class Map{
         this.displayX = this.x + this.xoffset;
       }
     }
+    // image()
   }
 
   translate(xoffset, yoffset){

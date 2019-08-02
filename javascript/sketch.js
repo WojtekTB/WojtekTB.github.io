@@ -56,7 +56,7 @@ function preload(){
   images.grassLeft = loadImage('assets/blocks/grassLeft.png');
   images.grassRight = loadImage('assets/blocks/grassRight.png');
   images.grassFull = loadImage('assets/blocks/grassFull.png');
-  images.schoolDesk = loadImage('assets/blocks/unnamed.png');
+  images.schoolDesk = loadImage('assets/blocks/school_desk.png');
   images.candle = loadImage('assets/blocks/candle.png');
   for(let i = 1;  i < 12; i++){//load idle anim
     if(i > 9){
