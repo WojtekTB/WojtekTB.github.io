@@ -26,7 +26,7 @@ class Map{
      this.grassLeftTexture = [assets.grassLeft, 4, "grassLeft: 4"];
      this.grassRightTexture = [assets.grassRight, 5, "grassRight: 5"];
      this.grassFullTexture = [assets.grassFull, 6, "grassFull: 6"];
-     // this.desk = [assets.schoolDesk, 8, "candle: 7"];
+     this.desk = [assets.schoolDesk, 8, "candle: 7"];
      this.candle = [assets.candle, 7, "candle: 7"];
 
      this.airBlocks = [this.grass1Texture[1],
