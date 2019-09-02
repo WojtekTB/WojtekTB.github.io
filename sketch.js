@@ -35,6 +35,7 @@ function setup() {
 }
 
 function draw() {
+  resizeCanvas(innerWidth, innerHeight);
   background(0);
   showDebug();
   for (let i = 0; i < birds.length; i++) {
