@@ -13,9 +13,12 @@ var skybox;
 var song;
 var amplitude;
 
+var carModel;
+
 function preload() {
   skybox = loadImage("./skybox.jpg");
   song = loadSound("./song.mp3");
+  carModel = loadModel("./DeLorean_Simple.obj");
 }
 
 function setup() {
@@ -30,7 +33,7 @@ function setup() {
 
   userStartAudio().then(function() {
     song.play();
-    myDiv.remove();
+    // myDiv.remove();
   });
   amplitude = new p5.Amplitude();
 }
@@ -166,4 +169,23 @@ function draw() {
     }
     endShape();
   }
+  rotateZ(PI);
+  rotateX(PI / 2);
+  translate(
+    -width / 4 + 60,
+    45 +
+      map(
+        noise((grid.width / 2) * step, (grid.height / 2 + 1) * step + travel),
+        0,
+        1,
+        0,
+        5
+      ),
+    700
+  );
+  //   fill(255);
+  stroke(158, 0, 224);
+  scale(0.5);
+  let car = model(carModel);
+  //   car.position(mouseX, 0, 0);
 }
