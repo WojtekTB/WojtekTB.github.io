@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<style>
+  #rectangle{
+    position: fixed;
+    left: 0px;
+    top: 0px;
+    width: 140px;
+    height: 100vh;
+    background:rgb(	144, 184, 193);
+}
+  #border{
+    position: fixed;
+    left: 1px;
+    top: 1px;
+    width: 132px;
+    height: 99vh;
+    border-style:solid;
+    border-color:rgb(201, 218, 225)
+  }
+  #mainColor1 {
+    border: 1px solid black;
+    border-radius: 10px;
+    display: inline-block;
+    position: fixed;
+    width: 100px;
+    height: 35px;
+    left: 20px;
+    top: 10px;
+  }
+  #mainColor2 {
+    border: 1px solid black;
+    border-radius: 10px;
+    display: inline-block;
+    position: fixed;
+    width: 100px;
+    height: 35px;
+    left: 20px;
+    top: 50px;
+  }
+  #mainSketch {
+    position: fixed;
+    left: 140px;
+    top: 0px;
+  }
+  #borderCheck{
+    position: fixed;
+    left: 20px;
+    top: 100px;
+  }
+  
+</style>
+<script>document.addEventListener('contextmenu', event => event.preventDefault());</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.9.0/p5.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.9.0/addons/p5.dom.min.js"></script>
+<script src="./sketch.js"></script>
+<script src="jscolor.js"></script>
+<div>
+  <div id="rectangle"></div>
+  <div id="border"></div>
+  <div id="borderCheck">
+      <input type="checkbox" id="drawBorder" name="drawBorder" checked>
+      <label for="drawBorder">Pixel Border</label>
+  </div>
+</div>
+  <body>
+    <div id="mainSketch">
+    <button id="mainColor1" class="jscolor {valueElement:null,value:'000000'}">Color 1</button>
+    <button id="mainColor2" class="jscolor {valueElement:null,value:'ffffff'}">Color 2</button>
+    
+  </body>
+</div>
