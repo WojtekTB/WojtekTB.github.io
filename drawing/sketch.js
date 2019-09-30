@@ -4,6 +4,9 @@ var color1Element;
 var color2Element;
 var downloadButton;
 
+var gridX = 0;
+var gridY = 0;
+
 var undoArray = [];
 
 var mainX = 0;
@@ -35,11 +38,14 @@ function setup() {
     undoArray.push(JSON.parse(JSON.stringify(mainGrid.gridCells)));
     // console.log(undoArray);
   });
-  mainGrid = new drawGrid(16, 16);
+  background(34, 53, 61);
+
+  gridX = parseInt(prompt("Enter width of the grid", "16"));
+  gridY = parseInt(prompt("Enter height of the grid", "16"));
+
+  mainGrid = new drawGrid(gridX, gridY);
   mainX = width / 2 - (mainGrid.w / 2) * mainGrid.scale;
   mainY = height / 2 - (mainGrid.h / 2) * mainGrid.scale;
-
-  background(34, 53, 61);
 
   undoArray.push(JSON.parse(JSON.stringify(mainGrid.gridCells)));
   // console.log(undoArray);
