@@ -3,6 +3,7 @@ var mainGrid;
 var color1Element;
 var color2Element;
 var downloadButton;
+var centerCanvasButton;
 
 var gridX = 0;
 var gridY = 0;
@@ -12,6 +13,11 @@ var undoArray = [];
 var mainX = 0;
 var mainY = 0;
 var scaleOfDraw = 30;
+
+var userPreferences = {
+  borderOn: true,
+  invertedScroll: false
+};
 
 var color1 = {
   r: 255,
@@ -28,16 +34,13 @@ var CTRL_DOWN = false;
 var Z_DOWN = false;
 
 //tools
-var brush = false;
-var bucket = false;
+// var tool_cur = ;
+var tool_brush = false;
+var tool_bucket = false;
 
 function setup() {
   myCanvas = createCanvas(innerWidth - 140, innerHeight);
   myCanvas.parent("mainSketch");
-  myCanvas.mouseReleased(() => {
-    undoArray.push(JSON.parse(JSON.stringify(mainGrid.gridCells)));
-    // console.log(undoArray);
-  });
   background(34, 53, 61);
 
   gridX = parseInt(prompt("Enter width of the grid", "16"));
@@ -47,8 +50,9 @@ function setup() {
   mainX = width / 2 - (mainGrid.w / 2) * mainGrid.scale;
   mainY = height / 2 - (mainGrid.h / 2) * mainGrid.scale;
 
+  setTool_Brush();
+
   undoArray.push(JSON.parse(JSON.stringify(mainGrid.gridCells)));
-  // console.log(undoArray);
   mainGrid.show(scaleOfDraw, mainX, mainY);
 
   color1Element = document.getElementById("mainColor1");
@@ -65,6 +69,87 @@ function setup() {
     width + downloadButton.width,
     height - downloadButton.height - 3
   );
+  centerCanvasButton = createButton("Center Canvas");
+  centerCanvasButton.mousePressed(() => {
+    mainX = width / 2 - (mainGrid.w / 2) * mainGrid.scale;
+    mainY = height / 2 - (mainGrid.h / 2) * mainGrid.scale;
+    mainGrid.show(scaleOfDraw, mainX, mainY);
+  });
+  centerCanvasButton.position(
+    width + downloadButton.width - centerCanvasButton.width - 3,
+    height - centerCanvasButton.height - 3
+  );
+
+  // document.getElementById("brushButton").mousePressed(() => {
+  //   setTool_Brush();
+  // });
+  // document.getElementById("bucketFillButton").mousePressed(() => {
+  //   setTool_BucketFill();
+  // });
+}
+
+function setTool_BucketFill() {
+  tool_brush = true;
+  myCanvas.mousePressed(() => {
+    let newColor1 = formatRGB(color1Element.style.backgroundColor);
+    color1.r = newColor1.r;
+    color1.g = newColor1.g;
+    color1.b = newColor1.b;
+    let newColor2 = formatRGB(color2Element.style.backgroundColor);
+    color2.r = newColor2.r;
+    color2.g = newColor2.g;
+    color2.b = newColor2.b;
+    if (mouseButton === LEFT) {
+      let cord = mainGrid.cordToCell(mouseX, mouseY);
+      floodFill(color1, cord.x, cord.y);
+    }
+    if (mouseButton === RIGHT) {
+      let cord = mainGrid.cordToCell(mouseX, mouseY);
+      floodFill(color2, cord.x, cord.y);
+    }
+    mainGrid.show(scaleOfDraw, mainX, mainY);
+  });
+}
+
+function setTool_Brush() {
+  tool_brush = true;
+  myCanvas.mousePressed(() => {
+    if (mouseButton === LEFT) {
+      let newColor1 = formatRGB(color1Element.style.backgroundColor);
+      color1.r = newColor1.r;
+      color1.g = newColor1.g;
+      color1.b = newColor1.b;
+      mainGrid.mousePressAt(color1, mouseX, mouseY);
+      // console.log("LEFT");
+    }
+    if (mouseButton === RIGHT) {
+      let newColor2 = formatRGB(color2Element.style.backgroundColor);
+      color2.r = newColor2.r;
+      color2.g = newColor2.g;
+      color2.b = newColor2.b;
+      mainGrid.mousePressAt(color2, mouseX, mouseY);
+      // console.log("RIGHT");
+    }
+    mainGrid.showCell(scaleOfDraw, mainX, mainY, mouseX, mouseY);
+  });
+  myCanvas.mouseReleased(() => {
+    undoArray.push(JSON.parse(JSON.stringify(mainGrid.gridCells)));
+    // console.log(undoArray);
+  });
+}
+
+function mouseWheel(event) {
+  if (CTRL_DOWN) {
+    scaleOfDraw += event.delta * 0.5;
+    if (scaleOfDraw < 4) {
+      scaleOfDraw = 4;
+    }
+  } else {
+    mainX -= event.deltaX;
+    mainY -= event.deltaY;
+  }
+  // console.log(event);
+  mainGrid.show(scaleOfDraw, mainX, mainY);
 }
 
 function downloadImage() {
@@ -84,6 +169,31 @@ function downloadImage() {
   img.save(fileName, "png");
 }
 
+function floodFill(color, x, y) {
+  //color should come as object {r:,g:,b:}
+  let startCell = mainGrid.getCellAt(x, y);
+  if (startCell === undefined || startCell === null) {
+    // console.log(startCell);
+    return;
+  }
+  if (
+    startCell.r === color.r &&
+    startCell.g === color.g &&
+    startCell.b === color.b
+  ) {
+    // console.log(startCell);
+    //if the same color
+    return;
+  }
+  // console.log(startCell);
+  let replacementCell = mainGrid.makeCell(color.r, color.g, color.b);
+  mainGrid.changeCellAt(replacementCell, x, y);
+  floodFill(color, x + 1, y);
+  floodFill(color, x, y + 1);
+  floodFill(color, x - 1, y);
+  floodFill(color, x, y - 1);
+}
+
 function keyPressed() {
   if (keyCode === CONTROL) {
     CTRL_DOWN = true;
@@ -94,9 +204,26 @@ function keyPressed() {
       undo();
     }
   }
+
+  if (keyCode === UP_ARROW) {
+    mainY += scaleOfDraw;
+    mainGrid.show(scaleOfDraw, mainX, mainY);
+  }
+  if (keyCode === DOWN_ARROW) {
+    mainY -= scaleOfDraw;
+    mainGrid.show(scaleOfDraw, mainX, mainY);
+  }
+  if (keyCode === LEFT_ARROW) {
+    mainX += scaleOfDraw;
+    mainGrid.show(scaleOfDraw, mainX, mainY);
+  }
+  if (keyCode === RIGHT_ARROW) {
+    mainX -= scaleOfDraw;
+    mainGrid.show(scaleOfDraw, mainX, mainY);
+  }
 }
 
-function ketRelease() {
+function keyReleased() {
   if (keyCode === CONTROL) {
     CTRL_DOWN = false;
   }
@@ -118,25 +245,25 @@ function undo() {
   undoArray.pop();
 }
 
-function mousePressed() {
-  if (mouseButton === LEFT) {
-    let newColor1 = formatRGB(color1Element.style.backgroundColor);
-    color1.r = newColor1.r;
-    color1.g = newColor1.g;
-    color1.b = newColor1.b;
-    mainGrid.mousePressAt(color1, mouseX, mouseY);
-    // console.log("LEFT");
-  }
-  if (mouseButton === RIGHT) {
-    let newColor2 = formatRGB(color2Element.style.backgroundColor);
-    color2.r = newColor2.r;
-    color2.g = newColor2.g;
-    color2.b = newColor2.b;
-    mainGrid.mousePressAt(color2, mouseX, mouseY);
-    // console.log("RIGHT");
-  }
-  mainGrid.showCell(scaleOfDraw, mainX, mainY, mouseX, mouseY);
-}
+// function mousePressed() {
+//   if (mouseButton === LEFT) {
+//     let newColor1 = formatRGB(color1Element.style.backgroundColor);
+//     color1.r = newColor1.r;
+//     color1.g = newColor1.g;
+//     color1.b = newColor1.b;
+//     mainGrid.mousePressAt(color1, mouseX, mouseY);
+//     // console.log("LEFT");
+//   }
+//   if (mouseButton === RIGHT) {
+//     let newColor2 = formatRGB(color2Element.style.backgroundColor);
+//     color2.r = newColor2.r;
+//     color2.g = newColor2.g;
+//     color2.b = newColor2.b;
+//     mainGrid.mousePressAt(color2, mouseX, mouseY);
+//     // console.log("RIGHT");
+//   }
+//   mainGrid.showCell(scaleOfDraw, mainX, mainY, mouseX, mouseY);
+// }
 function mouseDragged() {
   if (mouseButton === LEFT) {
     mainGrid.mousePressAt(color1, mouseX, mouseY);
@@ -151,9 +278,9 @@ function formatRGB(str) {
   let numbers = str.substring(4, str.length - 1);
   let arrayOfNumbers = numbers.split(", ");
   return {
-    r: arrayOfNumbers[0],
-    g: arrayOfNumbers[1],
-    b: arrayOfNumbers[2]
+    r: parseInt(arrayOfNumbers[0]),
+    g: parseInt(arrayOfNumbers[1]),
+    b: parseInt(arrayOfNumbers[2])
   };
 }
 
@@ -253,10 +380,10 @@ class drawGrid {
 
   getCellAt(x, y) {
     if (x > this.w || x < 0) {
-      return;
+      return null;
     }
     if (y > this.h - 1 || y < 0) {
-      return;
+      return null;
     }
     return this.gridCells[y][x];
   }

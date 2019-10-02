@@ -47,6 +47,13 @@
     left: 20px;
     top: 100px;
   }
+  #toolsDivider{
+    position: fixed;
+    left: 10px;
+    top: 130px;
+    width: 122px;
+    height: 99vh;
+  }
   
 </style>
 <script>document.addEventListener('contextmenu', event => event.preventDefault());</script>
@@ -60,6 +67,10 @@
   <div id="borderCheck">
       <input type="checkbox" id="drawBorder" name="drawBorder" checked>
       <label for="drawBorder">Pixel Border</label>
+  </div>
+  <div id="toolsDivider">
+      <button id="brushButton" onclick="setTool_Brush();">Brush</button>
+      <button id="bucketFillButton" onclick="setTool_BucketFill();">Bucket</button>
   </div>
 </div>
   <body>
