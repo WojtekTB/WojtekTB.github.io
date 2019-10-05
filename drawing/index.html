@@ -54,11 +54,23 @@
     width: 122px;
     height: 99vh;
   }
+  .toolButton{
+    width:55px;
+  }
+  #BottomRightButtons{
+    position: fixed;
+    right: 0px;
+    bottom: 1px;
+  }
   
 </style>
 <script>document.addEventListener('contextmenu', event => event.preventDefault());</script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.9.0/p5.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.9.0/addons/p5.dom.min.js"></script>
+<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.9.0/addons/p5.dom.min.js"></script> -->
+
+<!-- <script src="p5/p5.dom.js"></script> -->
+<!-- <script src="p5/p5.js"></script> -->
+
 <script src="./sketch.js"></script>
 <script src="jscolor.js"></script>
 <div>
@@ -69,14 +81,20 @@
       <label for="drawBorder">Pixel Border</label>
   </div>
   <div id="toolsDivider">
-      <button id="brushButton" onclick="setTool_Brush();">Brush</button>
-      <button id="bucketFillButton" onclick="setTool_BucketFill();">Bucket</button>
+      <button class="toolButton" onclick="setTool_Brush();">Brush</button>
+      <button class="toolButton" onclick="setTool_BucketFill();">Bucket</button>
+      <button class="toolButton" onclick="setTool_Eracer();">Eracer</button>
   </div>
 </div>
   <body>
     <div id="mainSketch">
-    <button id="mainColor1" class="jscolor {valueElement:null,value:'000000'}">Color 1</button>
-    <button id="mainColor2" class="jscolor {valueElement:null,value:'ffffff'}">Color 2</button>
+    <button id="mainColor1" class="jscolor {valueElement:null,value:'000000'}">Main Color</button>
+    <button id="mainColor2" class="jscolor {valueElement:null,value:'ffffff'}">Other Color</button>
     
   </body>
+</div>
+
+<div id="BottomRightButtons">
+  <button onclick="downloadImage();">Download</button>
+  <button onclick="centerCanvas();">Center Canvas</button>
 </div>

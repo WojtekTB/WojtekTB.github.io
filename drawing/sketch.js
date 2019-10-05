@@ -32,6 +32,7 @@ var color2 = {
 
 var CTRL_DOWN = false;
 var Z_DOWN = false;
+var SPACE_DOWN = false;
 
 //tools
 // var tool_cur = ;
@@ -62,30 +63,28 @@ function setup() {
     mainGrid.drawGrid = document.getElementById("drawBorder").checked;
     mainGrid.show(scaleOfDraw, mainX, mainY);
   });
+}
 
-  downloadButton = createButton("Download");
-  downloadButton.mousePressed(downloadImage);
-  downloadButton.position(
-    width + downloadButton.width,
-    height - downloadButton.height - 3
-  );
-  centerCanvasButton = createButton("Center Canvas");
-  centerCanvasButton.mousePressed(() => {
-    mainX = width / 2 - (mainGrid.w / 2) * mainGrid.scale;
-    mainY = height / 2 - (mainGrid.h / 2) * mainGrid.scale;
-    mainGrid.show(scaleOfDraw, mainX, mainY);
+function setTool_Line() {}
+
+function setTool_Eracer() {
+  myCanvas.mousePressed(() => {
+    let cordOfCell = mainGrid.cordToCell(mouseX, mouseY);
+    let newCell = mainGrid.makeInvisibleCell(color.r, color.g, color.b);
+    mainGrid.changeCellAt(newCell, cordOfCell.x, cordOfCell.y);
+    mainGrid.showCell(scaleOfDraw, mainX, mainY, mouseX, mouseY);
   });
-  centerCanvasButton.position(
-    width + downloadButton.width - centerCanvasButton.width - 3,
-    height - centerCanvasButton.height - 3
-  );
 
-  // document.getElementById("brushButton").mousePressed(() => {
-  //   setTool_Brush();
-  // });
-  // document.getElementById("bucketFillButton").mousePressed(() => {
-  //   setTool_BucketFill();
-  // });
+  myCanvas.mouseReleased(() => {
+    undoArray.push(JSON.parse(JSON.stringify(mainGrid.gridCells)));
+    //a weird hack, change if find a better way please
+  });
+  mouseDragged = function() {
+    let cordOfCell = mainGrid.cordToCell(mouseX, mouseY);
+    let newCell = mainGrid.makeInvisibleCell(color.r, color.g, color.b);
+    mainGrid.changeCellAt(newCell, cordOfCell.x, cordOfCell.y);
+    mainGrid.showCell(scaleOfDraw, mainX, mainY, mouseX, mouseY);
+  };
 }
 
 function setTool_BucketFill() {
@@ -95,20 +94,44 @@ function setTool_BucketFill() {
     color1.r = newColor1.r;
     color1.g = newColor1.g;
     color1.b = newColor1.b;
+    color1.alpha = newColor1.alpha;
     let newColor2 = formatRGB(color2Element.style.backgroundColor);
     color2.r = newColor2.r;
     color2.g = newColor2.g;
     color2.b = newColor2.b;
+    color2.alpha = newColor2.alpha;
+    let cord = mainGrid.cordToCell(mouseX, mouseY);
+    let startCell = mainGrid.getCellAt(cord.x, cord.y);
+    let initColor = {
+      r: startCell.r,
+      g: startCell.g,
+      b: startCell.b
+    };
     if (mouseButton === LEFT) {
-      let cord = mainGrid.cordToCell(mouseX, mouseY);
-      floodFill(color1, cord.x, cord.y);
+      // let cord = mainGrid.cordToCell(mouseX, mouseY);
+      try {
+        floodFill(initColor, color1, cord.x, cord.y);
+      } catch {
+        mainGrid.show(scaleOfDraw, mainX, mainY);
+      }
     }
     if (mouseButton === RIGHT) {
-      let cord = mainGrid.cordToCell(mouseX, mouseY);
-      floodFill(color2, cord.x, cord.y);
+      // let cord = mainGrid.cordToCell(mouseX, mouseY);
+      try {
+        floodFill(initColor, color2, cord.x, cord.y);
+      } catch {
+        mainGrid.show(scaleOfDraw, mainX, mainY);
+      }
     }
     mainGrid.show(scaleOfDraw, mainX, mainY);
   });
+  myCanvas.mouseReleased(() => {
+    undoArray.push(JSON.parse(JSON.stringify(mainGrid.gridCells)));
+    //a weird hack, change if find a better way please
+  });
+  mouseDragged = function() {
+    return;
+  };
 }
 
 function setTool_Brush() {
@@ -119,7 +142,8 @@ function setTool_Brush() {
       color1.r = newColor1.r;
       color1.g = newColor1.g;
       color1.b = newColor1.b;
-      mainGrid.mousePressAt(color1, mouseX, mouseY);
+      color1.alpha = newColor1.alpha;
+      mainGrid.brushUsedAt(color1, mouseX, mouseY);
       // console.log("LEFT");
     }
     if (mouseButton === RIGHT) {
@@ -127,15 +151,26 @@ function setTool_Brush() {
       color2.r = newColor2.r;
       color2.g = newColor2.g;
       color2.b = newColor2.b;
-      mainGrid.mousePressAt(color2, mouseX, mouseY);
+      color2.alpha = newColor2.alpha;
+      mainGrid.brushUsedAt(color2, mouseX, mouseY);
       // console.log("RIGHT");
     }
     mainGrid.showCell(scaleOfDraw, mainX, mainY, mouseX, mouseY);
   });
   myCanvas.mouseReleased(() => {
     undoArray.push(JSON.parse(JSON.stringify(mainGrid.gridCells)));
-    // console.log(undoArray);
+    //a weird hack, change if find a better way please
   });
+
+  mouseDragged = function() {
+    if (mouseButton === LEFT) {
+      mainGrid.brushUsedAt(color1, mouseX, mouseY);
+    }
+    if (mouseButton === RIGHT) {
+      mainGrid.brushUsedAt(color2, mouseX, mouseY);
+    }
+    mainGrid.showCell(scaleOfDraw, mainX, mainY, mouseX, mouseY);
+  };
 }
 
 function mouseWheel(event) {
@@ -154,44 +189,57 @@ function mouseWheel(event) {
 
 function downloadImage() {
   let fileName = prompt("Please enter name of the file", "drawing");
+  // if (fileName === null) {
+  //   fileName = "drawing";
+  // }
   if (fileName === null) {
-    fileName = "drawing";
-  }
-  let img = createImage(mainGrid.w, mainGrid.h);
-  img.loadPixels();
-  for (let x = 0; x < img.width; x++) {
-    for (let y = 0; y < img.height; y++) {
-      let cellColor = mainGrid.getCellAt(x, y);
-      img.set(x, y, color(cellColor.r, cellColor.g, cellColor.b));
+    return;
+  } else {
+    let img = createImage(mainGrid.w, mainGrid.h);
+    img.loadPixels();
+    for (let x = 0; x < img.width; x++) {
+      for (let y = 0; y < img.height; y++) {
+        let cellColor = mainGrid.getCellAt(x, y);
+        img.set(
+          x,
+          y,
+          color(cellColor.r, cellColor.g, cellColor.b, cellColor.alpha)
+        );
+      }
     }
+    img.updatePixels();
+    img.save(fileName, "png");
   }
-  img.updatePixels();
-  img.save(fileName, "png");
 }
 
-function floodFill(color, x, y) {
-  //color should come as object {r:,g:,b:}
-  let startCell = mainGrid.getCellAt(x, y);
-  if (startCell === undefined || startCell === null) {
-    // console.log(startCell);
+function findPath(startX, startY, endX, endY) {}
+
+function floodFill(colorToBeReplaced, color, x, y) {
+  let thisCell = mainGrid.getCellAt(x, y);
+  if (thisCell === undefined || thisCell === null) {
+    //if an invalid cell
     return;
   }
   if (
-    startCell.r === color.r &&
-    startCell.g === color.g &&
-    startCell.b === color.b
+    thisCell.r === colorToBeReplaced.r &&
+    thisCell.g === colorToBeReplaced.g &&
+    thisCell.b === colorToBeReplaced.b
   ) {
-    // console.log(startCell);
-    //if the same color
+    //if the cell is of the color we are trying to replace
+    mainGrid.changeCellAt(color, x, y);
+    floodFill(colorToBeReplaced, color, x + 1, y);
+    floodFill(colorToBeReplaced, color, x, y + 1);
+    floodFill(colorToBeReplaced, color, x - 1, y);
+    floodFill(colorToBeReplaced, color, x, y - 1);
+  } else {
+    //if it is not of the color we are trying to replace
     return;
   }
-  // console.log(startCell);
-  let replacementCell = mainGrid.makeCell(color.r, color.g, color.b);
-  mainGrid.changeCellAt(replacementCell, x, y);
-  floodFill(color, x + 1, y);
-  floodFill(color, x, y + 1);
-  floodFill(color, x - 1, y);
-  floodFill(color, x, y - 1);
+}
+function centerCanvas() {
+  mainX = width / 2 - (mainGrid.w / 2) * mainGrid.scale;
+  mainY = height / 2 - (mainGrid.h / 2) * mainGrid.scale;
+  mainGrid.show(scaleOfDraw, mainX, mainY);
 }
 
 function keyPressed() {
@@ -221,6 +269,10 @@ function keyPressed() {
     mainX -= scaleOfDraw;
     mainGrid.show(scaleOfDraw, mainX, mainY);
   }
+
+  // if (keyCode === SPACE) {
+  //   SPACE_DOWN = true;
+  // }
 }
 
 function keyReleased() {
@@ -230,6 +282,9 @@ function keyReleased() {
   if (key === `z`) {
     Z_DOWN = false;
   }
+  // if (keyCode === SPACE) {
+  //   SPACE_DOWN = true;
+  // }
 }
 
 function undo() {
@@ -245,31 +300,12 @@ function undo() {
   undoArray.pop();
 }
 
-// function mousePressed() {
-//   if (mouseButton === LEFT) {
-//     let newColor1 = formatRGB(color1Element.style.backgroundColor);
-//     color1.r = newColor1.r;
-//     color1.g = newColor1.g;
-//     color1.b = newColor1.b;
-//     mainGrid.mousePressAt(color1, mouseX, mouseY);
-//     // console.log("LEFT");
-//   }
-//   if (mouseButton === RIGHT) {
-//     let newColor2 = formatRGB(color2Element.style.backgroundColor);
-//     color2.r = newColor2.r;
-//     color2.g = newColor2.g;
-//     color2.b = newColor2.b;
-//     mainGrid.mousePressAt(color2, mouseX, mouseY);
-//     // console.log("RIGHT");
-//   }
-//   mainGrid.showCell(scaleOfDraw, mainX, mainY, mouseX, mouseY);
-// }
 function mouseDragged() {
   if (mouseButton === LEFT) {
-    mainGrid.mousePressAt(color1, mouseX, mouseY);
+    mainGrid.brushUsedAt(color1, mouseX, mouseY);
   }
   if (mouseButton === RIGHT) {
-    mainGrid.mousePressAt(color2, mouseX, mouseY);
+    mainGrid.brushUsedAt(color2, mouseX, mouseY);
   }
   mainGrid.showCell(scaleOfDraw, mainX, mainY, mouseX, mouseY);
 }
@@ -280,7 +316,8 @@ function formatRGB(str) {
   return {
     r: parseInt(arrayOfNumbers[0]),
     g: parseInt(arrayOfNumbers[1]),
-    b: parseInt(arrayOfNumbers[2])
+    b: parseInt(arrayOfNumbers[2]),
+    alpha: 255
   };
 }
 
@@ -298,14 +335,15 @@ class drawGrid {
         new Array(this.w).fill({
           r: 255,
           g: 255,
-          b: 255
+          b: 255,
+          alpha: 255
         })
       );
     }
     // console.log(this.gridCells);
   }
 
-  mousePressAt(color, x, y) {
+  brushUsedAt(color, x, y) {
     let cordOfCell = this.cordToCell(x, y);
     let newCell = this.makeCell(color.r, color.g, color.b);
     this.changeCellAt(newCell, cordOfCell.x, cordOfCell.y);
@@ -344,9 +382,43 @@ class drawGrid {
     if (cellCord.y > this.h - 1 || cellCord.y < 0) {
       return;
     }
-    // console.log(cellCord.y, this.h - 1);
-    fill(cell.r, cell.g, cell.b);
-    rect(cellCord.x * scale_ + x_, cellCord.y * scale_ + y_, scale_, scale_);
+    if (cell.alpha == 0) {
+      noStroke();
+      fill(230);
+      rect(
+        cellCord.x * scale_ + x_,
+        cellCord.y * scale_ + y_,
+        scale_ / 2,
+        scale_ / 2
+      );
+      rect(
+        cellCord.x * scale_ + x_ + scale_ / 2,
+        cellCord.y * scale_ + y_ + scale_ / 2,
+        scale_ / 2,
+        scale_ / 2
+      );
+      fill(250);
+      rect(
+        cellCord.x * scale_ + x_,
+        cellCord.y * scale_ + y_ + scale_ / 2,
+        scale_ / 2,
+        scale_ / 2
+      );
+      rect(
+        cellCord.x * scale_ + x_ + scale_ / 2,
+        cellCord.y * scale_ + y_,
+        scale_ / 2,
+        scale_ / 2
+      );
+      if (this.drawGrid) {
+        stroke(0);
+      } else {
+        noStroke();
+      }
+    } else {
+      fill(cell.r, cell.g, cell.b, cell.alpha);
+      rect(cellCord.x * scale_ + x_, cellCord.y * scale_ + y_, scale_, scale_);
+    }
   }
 
   show(scale_, x_, y_) {
@@ -361,11 +433,42 @@ class drawGrid {
     } else {
       noStroke();
     }
+    // let cellCord = this.cordToCell(cellX, cellY);
     for (let y = 0; y < this.h; y++) {
       for (let x = 0; x < this.w; x++) {
         let cell = this.getCellAt(x, y);
-        fill(cell.r, cell.g, cell.b);
-        rect(x * scale_ + x_, y * scale_ + y_, scale_, scale_);
+        if (cell.alpha == 0) {
+          noStroke();
+          fill(230);
+          rect(x * scale_ + mainX, y * scale_ + mainY, scale_ / 2, scale_ / 2);
+          rect(
+            x * scale_ + mainX + scale_ / 2,
+            y * scale_ + mainY + scale_ / 2,
+            scale_ / 2,
+            scale_ / 2
+          );
+          fill(250);
+          rect(
+            x * scale_ + mainX,
+            y * scale_ + mainY + scale_ / 2,
+            scale_ / 2,
+            scale_ / 2
+          );
+          rect(
+            x * scale_ + mainX + scale_ / 2,
+            y * scale_ + mainY,
+            scale_ / 2,
+            scale_ / 2
+          );
+          if (this.drawGrid) {
+            stroke(0);
+          } else {
+            noStroke();
+          }
+        } else {
+          fill(cell.r, cell.g, cell.b, cell.alpha);
+          rect(x * scale_ + x_, y * scale_ + y_, scale_, scale_);
+        }
       }
     }
   }
@@ -374,7 +477,16 @@ class drawGrid {
     return {
       r: r_,
       g: g_,
-      b: b_
+      b: b_,
+      alpha: 255
+    };
+  }
+  makeInvisibleCell() {
+    return {
+      r: 0,
+      g: 0,
+      b: 0,
+      alpha: 0
     };
   }
 
