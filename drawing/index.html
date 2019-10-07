@@ -62,14 +62,27 @@
     right: 0px;
     bottom: 1px;
   }
+  #bottomLeft{
+    position: fixed;
+    left: 5px;
+    top: 70vh;
+    width: 128px;
+  }
+  #Tool-Preferences{
+    background-color: cadetblue;
+    padding: 20px;
+    position: fixed;
+    left: 0px;
+    bottom: 0px;
+    width: 200px;
+    height: 400px;
+    visibility: hidden;
+  }
   
 </style>
 <script>document.addEventListener('contextmenu', event => event.preventDefault());</script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.9.0/p5.js"></script>
-<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.9.0/addons/p5.dom.min.js"></script> -->
-
-<!-- <script src="p5/p5.dom.js"></script> -->
-<!-- <script src="p5/p5.js"></script> -->
+<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.9.0/p5.js"></script> -->
+<script src="p5/p5.js"></script><!---is a file, could also do cdn as it is essencially the same thing-->
 
 <script src="./sketch.js"></script>
 <script src="jscolor.js"></script>
@@ -84,17 +97,27 @@
       <button class="toolButton" onclick="setTool_Brush();">Brush</button>
       <button class="toolButton" onclick="setTool_BucketFill();">Bucket</button>
       <button class="toolButton" onclick="setTool_Eracer();">Eracer</button>
+      <button class="toolButton" onclick="setTool_Line();">Line</button>
   </div>
 </div>
   <body>
     <div id="mainSketch">
-    <button id="mainColor1" class="jscolor {valueElement:null,value:'000000'}">Main Color</button>
-    <button id="mainColor2" class="jscolor {valueElement:null,value:'ffffff'}">Other Color</button>
+    <button id="mainColor1" class="jscolor {valueElement:null,value:'000000'}">Left Mouse</button>
+    <button id="mainColor2" class="jscolor {valueElement:null,value:'ffffff'}">Right Mouse</button>
     
   </body>
+</div>
+<div id="bottomLeft">
+  <button onclick="populatePalleteDivider();">Update Pallet</button>
+  <div id="pallete"></div>
 </div>
 
 <div id="BottomRightButtons">
   <button onclick="downloadImage();">Download</button>
   <button onclick="centerCanvas();">Center Canvas</button>
+</div>
+
+
+<div id="Tool-Preferences">
+  Preferences
 </div>

@@ -9,6 +9,7 @@ var gridX = 0;
 var gridY = 0;
 
 var undoArray = [];
+var pallete = [];
 
 var mainX = 0;
 var mainY = 0;
@@ -20,14 +21,14 @@ var userPreferences = {
 };
 
 var color1 = {
-  r: 255,
+  r: 0,
   g: 0,
   b: 0
 };
 var color2 = {
   r: 255,
-  g: 0,
-  b: 0
+  g: 255,
+  b: 255
 };
 
 var CTRL_DOWN = false;
@@ -48,6 +49,7 @@ function setup() {
   gridY = parseInt(prompt("Enter height of the grid", "16"));
 
   mainGrid = new drawGrid(gridX, gridY);
+
   mainX = width / 2 - (mainGrid.w / 2) * mainGrid.scale;
   mainY = height / 2 - (mainGrid.h / 2) * mainGrid.scale;
 
@@ -59,13 +61,56 @@ function setup() {
   color1Element = document.getElementById("mainColor1");
   color2Element = document.getElementById("mainColor2");
 
+  populatePalleteDivider();
+
   document.getElementById("drawBorder").addEventListener("click", () => {
     mainGrid.drawGrid = document.getElementById("drawBorder").checked;
     mainGrid.show(scaleOfDraw, mainX, mainY);
   });
 }
 
-function setTool_Line() {}
+function setTool_Line() {
+  //so the idea is that you press somewhere the first time, and it marks the beginning,
+  //then you click the second one and it marks the end, then it just path finds to it
+  let startX;
+  let startY;
+  let linePart1 = function() {
+    let cord = mainGrid.cordToCell(mouseX, mouseY);
+    startX = cord.x;
+    startY = cord.y;
+    myCanvas.mousePressed(linePart2);
+    myCanvas.mouseReleased(() => {
+      undoArray.push(JSON.parse(JSON.stringify(mainGrid.gridCells)));
+      //a weird hack, change if find a better way please
+      populatePalleteDivider();
+    });
+  };
+  let linePart2 = function() {
+    let cord = mainGrid.cordToCell(mouseX, mouseY);
+    let path = findPath(startX, startY, cord.x, cord.y);
+    // console.log(path);
+    let newColor1 = formatRGB(color1Element.style.backgroundColor);
+    color1.r = newColor1.r;
+    color1.g = newColor1.g;
+    color1.b = newColor1.b;
+    color1.alpha = newColor1.alpha;
+    for (cell of path) {
+      let newCell = mainGrid.makeCell(color1.r, color1.g, color1.b);
+      mainGrid.changeCellAt(newCell, cell.x, cell.y);
+    }
+    mainGrid.show(scaleOfDraw, mainX, mainY);
+    myCanvas.mousePressed(linePart1);
+
+    myCanvas.mouseReleased(function() {
+      populatePalleteDivider();
+    });
+  };
+  myCanvas.mousePressed(linePart1);
+  mouseDragged = function() {};
+  myCanvas.mouseReleased(function() {
+    populatePalleteDivider();
+  });
+}
 
 function setTool_Eracer() {
   myCanvas.mousePressed(() => {
@@ -128,6 +173,7 @@ function setTool_BucketFill() {
   myCanvas.mouseReleased(() => {
     undoArray.push(JSON.parse(JSON.stringify(mainGrid.gridCells)));
     //a weird hack, change if find a better way please
+    populatePalleteDivider();
   });
   mouseDragged = function() {
     return;
@@ -160,6 +206,7 @@ function setTool_Brush() {
   myCanvas.mouseReleased(() => {
     undoArray.push(JSON.parse(JSON.stringify(mainGrid.gridCells)));
     //a weird hack, change if find a better way please
+    populatePalleteDivider();
   });
 
   mouseDragged = function() {
@@ -212,7 +259,79 @@ function downloadImage() {
   }
 }
 
-function findPath(startX, startY, endX, endY) {}
+function findPath(x1, y1, x2, y2) {
+  let findInBetween = function(startX, startY, endX, endY) {
+    //should return an array of x y cordinates
+    let pathCells = [];
+    if (startX === endX && startY === endY) {
+      // pathCells.push({ x: startX, y: startY });
+      return pathCells;
+    }
+
+    let initX = startX;
+    let initY = startY;
+    let min = {
+      x: initX,
+      y: initY
+    };
+    if (startX > endX) {
+      if (startY > endY) {
+        min = {
+          x: initX - 1,
+          y: initY - 1
+        };
+      } else if (startY < endY) {
+        min = {
+          x: initX - 1,
+          y: initY + 1
+        };
+      } else {
+        min = {
+          x: initX - 1,
+          y: initY
+        };
+      }
+    } else if (startX < endX) {
+      if (startY > endY) {
+        min = {
+          x: initX + 1,
+          y: initY - 1
+        };
+      } else if (startY < endY) {
+        min = {
+          x: initX + 1,
+          y: initY + 1
+        };
+      } else {
+        min = {
+          x: initX + 1,
+          y: initY
+        };
+      }
+    } else {
+      if (startY > endY) {
+        min = {
+          x: initX,
+          y: initY - 1
+        };
+      } else if (startY < endY) {
+        min = {
+          x: initX,
+          y: initY + 1
+        };
+      }
+    }
+    pathCells.push({ x: min.x, y: min.y });
+    pathCells = pathCells.concat(findInBetween(min.x, min.y, endX, endY));
+    return pathCells;
+  };
+  let output = [];
+  output.push({ x: x1, y: y1 });
+  let otherCells = findInBetween(x1, y1, x2, y2);
+  output = output.concat(otherCells);
+  console.log(otherCells);
+  return output;
+}
 
 function floodFill(colorToBeReplaced, color, x, y) {
   let thisCell = mainGrid.getCellAt(x, y);
@@ -319,6 +438,47 @@ function formatRGB(str) {
     b: parseInt(arrayOfNumbers[2]),
     alpha: 255
   };
+}
+
+function updatePallete() {
+  pallete = [];
+  for (let x = 0; x < mainGrid.w; x++) {
+    for (let y = 0; y < mainGrid.h; y++) {
+      let curCell = mainGrid.getCellAt(x, y);
+      let colors = rgbToHex(curCell.r, curCell.g, curCell.b);
+      if (!pallete.includes(colors)) {
+        pallete.push(colors);
+      }
+    }
+  }
+}
+
+function populatePalleteDivider() {
+  let div = document.getElementById("pallete");
+  updatePallete();
+  div.innerHTML = "";
+
+  for (colors of pallete) {
+    let btn = document.createElement("BUTTON"); // Create a <button> element
+    // btn.innerHTML = "bruh";
+    btn.id = `id-${colors}`;
+    btn.style = `background-color: ${colors}; width: 30px; height: 30px;`;
+    btn.addEventListener("click", function() {
+      setColorFromPallet(btn.style.backgroundColor);
+    });
+    // btn.onclick = "";
+    div.appendChild(btn); // Append <button> to <body>
+  }
+}
+
+function setColorFromPallet(color) {
+  // console.log(color1Element);
+  let newColor = formatRGB(color);
+  color1Element.style.backgroundColor = rgbToHex(
+    newColor.r,
+    newColor.g,
+    newColor.b
+  );
 }
 
 class drawGrid {
