@@ -47,8 +47,15 @@
 <script src="./p5/p5.js"></script>
 <script src="./sketch.js"></script>
 <div id="mainSketch">
-  <button id="Resume-Button">Resume</button>
-  <button id="Project-Button">Projects</button>
+  <button id="Resume-Button">
+    Resume
+  </button>
+  <button
+    id="Project-Button"
+    onclick="window.location.href = './page_projects'"
+  >
+    Projects
+  </button>
   <div id="statsCheck">
     <input
       onclick="StatsCliked();"
@@ -63,6 +70,22 @@
     text-decoration: none;
     font-family: 'Courier New', Courier, monospace"
       >Cool Stats</label
+    >
+    <input
+      type="range"
+      min="1"
+      max="254"
+      value="60"
+      id="slider"
+      onchange="updateTrail();"
+    />
+    <label
+      for="slider"
+      style="color: aliceblue;
+    font-size: 14px;
+    text-decoration: none;
+    font-family: 'Courier New', Courier, monospace"
+      >Trails</label
     >
   </div>
 

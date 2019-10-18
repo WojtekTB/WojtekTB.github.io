@@ -15,6 +15,8 @@ var rotationGraph;
 var statsShow = false;
 var trailing = 255;
 
+var trail = 60;
+
 function preload() {
   titleImage = loadImage("./vadim kim website.png");
 }
@@ -48,11 +50,17 @@ function setup() {
   rotationGraph = new drawGraph("#0000ff", 2, 230, 2, 5);
 }
 
+function updateTrail() {
+  let slider = document.getElementById("slider");
+  console.log(slider.value);
+  trail = parseInt(slider.value);
+}
+
 function draw() {
   if (width != innerWidth || height != innerHeight) {
     resizeCanvas(innerWidth, innerHeight);
   }
-  background(0, 60);
+  background(0, trail);
   // background(0);
   let sumSpeed = 0;
   let sumRotationSpeed = 0;
