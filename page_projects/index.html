@@ -3,23 +3,44 @@
    body{
     background-color: black;
   }
+  .buttonBody{
+    border: solid;
+    width: 325px;
+    border-width: 1px;
+    border-color: aliceblue;
+  }
   #ButtonContainer{
+    display: flex;
+    justify-content: space-between;
     padding: 1%;
     border: solid;
     border-width: 2px;
     border-color: aliceblue;
+    margin: 10px;
   }
   #projectButton{
-    width: 80px;
+    width: 100%;
     height: 40px;
   }
 </style>
   <body>
     <div id="ButtonContainer">
-      <button id="projectButton" onclick="window.location.href = '../drawing'">MoniPix</button>
-      <button id="projectButton" onclick="window.location.href = '../planets'">Planets</button>
-      <button id="projectButton" onclick="window.location.href = '../outrun'">Outrun</button>
-      <button id="projectButton" onclick="window.location.href = '../silos'">Silos</button>
+      <div class="buttonBody">
+        <img src="./gifs/monipix.gif">
+        <button id="projectButton" onclick="window.location.href = '../drawing'">MoniPix</button>
+      </div>
+      <div class="buttonBody">
+        <img src="./gifs/planets.gif">
+        <button id="projectButton" onclick="window.location.href = '../planets'">Planets</button>
+      </div>
+      <div class="buttonBody">
+        <img src="./gifs/outrun.gif">
+        <button id="projectButton" onclick="window.location.href = '../outrun'">Outrun</button>
+      </div>
+      <div class="buttonBody">
+        <img src="./gifs/silos.gif">
+        <button id="projectButton" onclick="window.location.href = '../silos'">Silos</button>
+      </div>
     </div>
   </body>
   </form>
