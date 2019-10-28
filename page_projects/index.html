@@ -13,10 +13,13 @@
     display: flex;
     justify-content: space-between;
     padding: 1%;
+    margin: 10px;
+    text-align: center
+  }
+  #mainContainer{
     border: solid;
     border-width: 2px;
     border-color: aliceblue;
-    margin: 10px;
   }
   #projectButton{
     width: 100%;
@@ -24,22 +27,32 @@
   }
 </style>
   <body>
-    <div id="ButtonContainer">
-      <div class="buttonBody">
-        <img src="./gifs/monipix.gif">
-        <button id="projectButton" onclick="window.location.href = '../drawing'">MoniPix</button>
+    <div id="mainContainer">
+
+      <div id="ButtonContainer">
+        <div class="buttonBody">
+          <img src="./gifs/monipix.gif">
+          <button id="projectButton" onclick="window.location.href = '../drawing'">MoniPix</button>
+        </div>
+        <div class="buttonBody">
+          <img src="./gifs/planets.gif">
+          <button id="projectButton" onclick="window.location.href = '../planets'">Planets</button>
+        </div>
+        <div class="buttonBody">
+          <img src="./gifs/outrun.gif">
+          <button id="projectButton" onclick="window.location.href = '../outrun'">Outrun</button>
+        </div>
+        <div class="buttonBody">
+          <img src="./gifs/silos.gif">
+          <button id="projectButton" onclick="window.location.href = '../silos'">Silos</button>
+        </div>
       </div>
-      <div class="buttonBody">
-        <img src="./gifs/planets.gif">
-        <button id="projectButton" onclick="window.location.href = '../planets'">Planets</button>
-      </div>
-      <div class="buttonBody">
-        <img src="./gifs/outrun.gif">
-        <button id="projectButton" onclick="window.location.href = '../outrun'">Outrun</button>
-      </div>
-      <div class="buttonBody">
-        <img src="./gifs/silos.gif">
-        <button id="projectButton" onclick="window.location.href = '../silos'">Silos</button>
+  
+      <div id="ButtonContainer">
+        <div class="buttonBody">
+          <img src="./gifs/city.gif">
+          <button id="projectButton" onclick="window.location.href = '../city'">City</button>
+        </div>
       </div>
     </div>
   </body>

@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>City</title>
+    <style>
+      body {
+        padding: 0;
+        margin: 0;
+        min-height: 100%;
+        min-width: 1024px;
+
+        /* Set up proportionate scaling */
+        width: 100%;
+        height: auto;
+
+        /* Set up positioning */
+        position: fixed;
+        top: 0;
+        left: 0;
+      }
+
+      #ui {
+        position: fixed;
+        right: 5px;
+        top: 0px;
+        text-align: right;
+      }
+      #backCanvas {
+        position: fixed;
+        left: 0px;
+        top: 0px;
+        /* text-align: right; */
+      }
+      #frontCanvas {
+        position: fixed;
+        left: 0px;
+        top: 0px;
+        /* text-align: right; */
+      }
+
+      #ui-hour {
+        width: 10vw;
+      }
+
+      #timeText {
+        width: 10vw;
+      }
+    </style>
+    <script src="./p5/p5.js"></script>
+    <script src="./p5/p5.sound.js"></script>
+    <script src="sketch.js"></script>
+    <script src="buildings.js"></script>
+  </head>
+  <body>
+    <div id="backCanvas"></div>
+    <div id="frontCanvas"></div>
+    <div id="ui">
+      <h1 id="timeText" style="font-family:Tahoma; font-size:3vw"></h1>
+      <input id="ui-hour" type="range" min="0" max="23" step="1" />
+    </div>
+    <script>
+      const date = new Date();
+      function onSliderChange(e) {
+        const newValue = parseInt(e.target.value, 10);
+        backgroundCanvas.changeTime(newValue);
+        // foregroundCanvas.changeTime(newValue);
+        // console.log(newValue);
+        timeTextElement.innerHTML = `${newValue}:${(
+          "0" + date.getMinutes()
+        ).slice(-2)}`;
+      }
+      const rangeElement = document.getElementById("ui-hour");
+      rangeElement.value = date.getHours();
+      rangeElement.addEventListener("change", onSliderChange);
+
+      const timeTextElement = document.getElementById("timeText");
+      timeTextElement.innerHTML = `${date.getHours()}:${(
+        "0" + date.getMinutes()
+      ).slice(-2)}`;
+    </script>
+  </body>
+</html>
