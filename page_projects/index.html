@@ -4,11 +4,36 @@
     background-color: black;
   }
   .buttonBody{
+    position: relative;
     border: solid;
+    height: 219px;
     width: 325px;
+    overflow:hidden;
     border-width: 1px;
-    border-color: aliceblue;
+    border-color: rgb(255, 255, 255);
   }
+
+  #gif{
+    position: relative;
+    top:-178px;
+    left: 0px;
+    z-index: 1;
+    width: 325px;
+    height: 174px;
+  }
+  #staticImage{
+    position: relative;
+    top: 0px;
+    left: 0px;
+    z-index: 2;
+    width: 325px;
+    height: 174px;
+  }
+  #staticImage:hover{
+      opacity: 0;
+      transition: 0.2s;
+  }
+  
   #ButtonContainer{
     display: flex;
     justify-content: space-between;
@@ -22,35 +47,66 @@
     border-color: aliceblue;
   }
   #projectButton{
+    position: relative;
+    top: -182px;
+    left: 0px;
     width: 100%;
-    height: 40px;
+    height: 45px;
+    
+    background-color: Transparent;
+    outline-color: transparent;
+    border: 2px solid whitesmoke;
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    font-size: 16px;
+    cursor: pointer;
+    font-family: "Courier New", Courier, monospace;
   }
+  .buttonBody:hover{
+    border-color:rgb(255,22,144);
+    color:rgb(255,22,144);
+    box-shadow: 0 5px 15px rgba(255,22,144, 40);
+    transition: 0.1s;
+  }
+  /* .buttonBody:hover {
+    border-color:rgb(255,22,144);
+    color:rgb(255,22,144);
+    box-shadow: 0 5px 15px rgba(255,22,144, 40);
+    transition: 0.1s;
+  } */
 </style>
   <body>
     <div id="mainContainer">
 
       <div id="ButtonContainer">
         <div class="buttonBody">
-          <img src="./gifs/monipix.gif">
+          <img src="./statics/monipix.png" id="staticImage">
+          <img src="./gifs/monipix.gif"  id="gif">
           <button id="projectButton" onclick="window.location.href = '../drawing'">MoniPix</button>
         </div>
         <div class="buttonBody">
-          <img src="./gifs/planets.gif">
+          <img src="./statics/planets.png" id="staticImage">
+          <img src="./gifs/planets.gif" id="gif">
           <button id="projectButton" onclick="window.location.href = '../planets'">Planets</button>
         </div>
         <div class="buttonBody">
-          <img src="./gifs/outrun.gif">
+          <img src="./statics/outrun.png" id="staticImage">
+          <img src="./gifs/outrun.gif" id="gif">
           <button id="projectButton" onclick="window.location.href = '../outrun'">Outrun</button>
         </div>
         <div class="buttonBody">
-          <img src="./gifs/silos.gif">
+          <img src="./statics/silos.png" id="staticImage">
+          <img src="./gifs/silos.gif" id="gif">
           <button id="projectButton" onclick="window.location.href = '../silos'">Silos</button>
         </div>
       </div>
   
       <div id="ButtonContainer">
         <div class="buttonBody">
-          <img src="./gifs/city.gif">
+          <img src="./statics/city.png" id="staticImage">
+          <img src="./gifs/city.gif" id="gif">
           <button id="projectButton" onclick="window.location.href = '../city'">City</button>
         </div>
       </div>
