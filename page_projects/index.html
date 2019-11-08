@@ -18,6 +18,7 @@
       border-color: aliceblue;  
       transition: 0.5s;
   }
+
   .image{
       width: 24vw;
       z-index: 2;    
@@ -31,6 +32,7 @@
   }
   .image:hover{
       opacity: 0;
+
       cursor: pointer;
       transition: 0.5s;
   }
@@ -48,17 +50,64 @@
      /* transform: translate(0.5vw, 0px); */
      grid-gap: 1vw;
      grid-template-columns: repeat(4, 24vw);
-     grid-template-rows: repeat(4, 200px);
+     grid-template-rows: repeat(2, 24vh);
    }
    h5{
-    width: 24vw; 
-    z-index: 1;
     position: absolute;
-    bottom: 0px;
-    left: 0px;
+    width: 24vw; 
+    top: -2vh;
+    left: 0;
+    z-index: 1;
     background-color: Transparent;
     outline-color: transparent;
     color: white;
+    text-shadow:
+   -1px -1px 0 #000,  
+    1px -1px 0 #000,
+    -1px 1px 0 #000,
+     1px 1px 0 #000;
+    text-align: center;
+    text-decoration: none;
+    font-size: 16px;
+    font-family: "Courier New", Courier, monospace;
+   }
+   .documentationButton{
+    position: absolute;
+    bottom: 0px;
+    left: 0px;
+    width: 12vw;
+    height: 45px;
+    z-index: 1;
+    background-color: Transparent;
+    outline-color: transparent;
+    border: 2px solid transparent;
+    color: white;
+    text-shadow:
+   -1px -1px 0 #000,  
+    1px -1px 0 #000,
+    -1px 1px 0 #000,
+     1px 1px 0 #000;
+    text-align: center;
+    text-decoration: none;
+    font-size: 16px;
+    font-family: "Courier New", Courier, monospace;
+   }
+   .projectButton{
+    position: absolute;
+    bottom: 0px;
+    right: 0px;
+    width: 12vw;
+    height: 45px;
+    z-index: 1;
+    background-color: Transparent;
+    outline-color: transparent;
+    border: 2px solid transparent;
+    color: white;
+    text-shadow:
+   -1px -1px 0 #000,  
+    1px -1px 0 #000,
+    -1px 1px 0 #000,
+     1px 1px 0 #000;
     text-align: center;
     text-decoration: none;
     font-size: 16px;
@@ -76,14 +125,15 @@
     font-size: 16px;
     font-family: "Courier New", Courier, monospace;
    }
+   
 </style>
   <body>
       <h1>Projects</h1>
       <div class="gridContainer">
           <div class="imageContainer">
+              <h5>Cityscape</h5>
               <img class="image" src="./statics/city.png" onclick="window.location.href = '../city'">
               <input class="imageButton" type="image" src="./gifs/city.gif">
-              <h5>Cityscape</h5>
             </div>
             <div class="imageContainer">
                 <img class="image" src="./statics/monipix.png" onclick="window.location.href = '../monipix'">
