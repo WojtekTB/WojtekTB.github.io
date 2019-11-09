@@ -11,13 +11,15 @@
     top: 0px;
   }
   #Resume-Button,
-  #Project-Button {
+  #Project-Button,
+  #aboutMeButton {
     width: 10vw;
-    background-color: Transparent;
+    /* background-color: Transparent; */
+    background-color: black;
     outline-color: transparent;
     border: 2px solid whitesmoke;
     color: white;
-    padding: 15px 32px;
+    padding: 15px 15px;
     text-align: center;
     text-decoration: none;
     font-size: 16px;
@@ -26,6 +28,7 @@
     font-family: "Courier New", Courier, monospace;
     opacity: 0;
   }
+
   #Project-Button {
     transition: 0.5s;
     transform: translateX(100%);
@@ -36,32 +39,14 @@
     transform: translateX(-100%);
     z-index: 3;
   }
-  /* #Project-Button {
-    width: 10vw;
-    background-color: Transparent;
-    outline-color: transparent;
-    border: 2px solid whitesmoke;
-    color: white;
-    padding: 15px 32px;
-    text-align: center;
-    text-decoration: none;
-    font-size: 16px;
-    margin: 4px 2px;
-    cursor: pointer;
-    font-family: "Courier New", Courier, monospace;
-    opacity: 0;
+  #aboutMeButton {
     transition: 0.5s;
-    transform: translateX(-100%);
-    z-index: 3;
-  } */
-
-  #websiteTitle {
+    transform: translateY(100%);
     position: fixed;
-    left: 27.5vw;
-    top: 37.5vh;
-    width: 45vw;
-    /* margin: 0px; */
+    left: 45vw;
+    top: 67vh;
   }
+
   #avatarImage {
     width: 10vw;
     margin-top: 0px;
@@ -72,30 +57,51 @@
     z-index: 3;
   }
   #allignmentContainer {
+    height: 45%;
+    width: 40%;
     position: fixed;
     left: 33vw;
-    top: 35vh;
+    top: 32vh;
     display: inline-block;
   }
-  #allignmentContainer:hover > #Project-Button {
+  #secondRow {
+    width: 100vw;
+    margin: auto;
+    display: block;
+  }
+  #websiteTitle {
+    position: fixed;
+    left: 27.5vw;
+    top: 34.5vh;
+    width: 45vw;
+
+    opacity: 0;
+    transform: translateY(-100%);
+    transition: 0.5s;
+  }
+  #allignmentContainer:hover #websiteTitle {
+    transform: translateY(0%);
     transition: 0.5s;
     opacity: 1;
-    transform: translateX(0%);
   }
+
+  #allignmentContainer:hover > #Project-Button,
   #allignmentContainer:hover > #Resume-Button {
     transition: 0.5s;
     opacity: 1;
     transform: translateX(0%);
   }
-  /* #Project-Button:hover,
-  #Resume-Button:hover {
+  #allignmentContainer:hover #aboutMeButton {
+    transform: translateY(0%);
     transition: 0.5s;
     opacity: 1;
-  } */
-  /* #avatarImage:hover #Resume-Button,
-  #Resume-Button:hover {
-    transition: 0.5s;
-    opacity: 1;
+  }
+  /* #allignmentContainer:hover > #Project-Button,
+  #allignmentContainer:hover > #Resume-Button,
+  #allignmentContainer:hover #aboutMeButton {
+    border-color: rgb(136, 237, 255);
+    color: rgb(136, 237, 255);
+    box-shadow: 0px 0px 70px rgba(136, 237, 255, 10);
   } */
 </style>
 <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.9.0/p5.js"></script> -->
@@ -107,10 +113,13 @@
     <img id="avatarImage" src="avatar.png" />
     <button
       id="Project-Button"
-      onclick="window.location.href = '../page_projects'"
+      onclick="window.location.href = './page_projects/index.html'"
     >
       Projects
     </button>
+    <div id="secondRow">
+      <button id="aboutMeButton">About me</button>
+    </div>
     <img id="websiteTitle" src="vadim kim website.png" />
   </div>
   <div id="statsCheck">

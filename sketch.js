@@ -25,7 +25,7 @@ function setup() {
   angleMode(DEGREES);
   canvas = createCanvas(innerWidth, innerHeight);
   canvas.parent("mainSketch");
-  for (let i = 0; i < 12; i++) {
+  for (let i = 0; i < 30; i++) {
     asteroids.push(
       new Asteroid(
         random(0, innerWidth),
@@ -70,6 +70,15 @@ function draw() {
       birds.splice(i, 1);
       averageRotationSpeedLog.push(averageRotationSpeed);
       averageSpeedLog.push(averageSpeed);
+      birds.push(
+        new Bird(
+          random(0, width),
+          random(0, height),
+          random(0, 360),
+          random(2, 5), //rotation speed
+          random(0.5, 2) //speed
+        )
+      );
     } else {
       sumSpeed += birds[i].speed;
       sumRotationSpeed += birds[i].rotationSpeed;
