@@ -17,9 +17,9 @@ var trailing = 255;
 
 var trail = 60;
 
-function preload() {
-  titleImage = loadImage("./vadim kim website.png");
-}
+// function preload() {
+//   titleImage = loadImage("./vadim kim website.png");
+// }
 
 function setup() {
   angleMode(DEGREES);
@@ -80,7 +80,7 @@ function draw() {
   for (let i = 0; i < asteroids.length; i++) {
     asteroids[i].run();
   }
-  showTitle();
+  // showTitle();
   if (statsShow) {
     showDebug();
   }
