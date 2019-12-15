@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Bruh Moment</title>
+    <style>
+      body {
+        background-image: url("background_bruh.png");
+        background-repeat: repeat;
+      }
+      #sizer {
+        direction: rtl;
+      }
+      img {
+        position: fixed;
+        left: 50vw;
+        top: 0px;
+        height: 100vh;
+        transform: translate(-50%);
+        pointer-events: none;
+      }
+      @font-face {
+        font-family: markerFont;
+        src: url("markerFont.ttf");
+      }
+      textarea {
+        position: fixed;
+        left: 50vw;
+        top: 50vh;
+        /* width: 10vw; */
+        background: transparent;
+        border: none;
+        text-align: center;
+        font-family: markerFont;
+        font-size: 40px;
+        opacity: 40%;
+        resize: both;
+      }
+    </style>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.js"></script>
+    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.10.2/p5.js"></script>
+    <script src="sketch.js"></script>
+    <div id="mainSketch"></div> -->
+  </head>
+
+  <script>
+    var initTextSize = 20;
+
+    let k = function() {
+      let image1 = $("#backImage");
+      let input = $("#mainInput");
+      input.css("width", image1.width() / 1.9);
+      input.css("height", image1.height() / 3);
+      let boardX = innerWidth / 2 - image1.width() / 2.5;
+      let boardY = innerHeight / 2 - image1.height() / 6;
+      input.css({ left: boardX, top: boardY });
+      // input.disableSelection();
+
+      //setting font size according to the size
+      input.css("font-size", image1.height() / initTextSize);
+      //6.65
+    };
+    $(k);
+
+    $(window).resize(k);
+
+    function sliderChanged(e) {
+      let image1 = $("#backImage");
+      let input = $("#mainInput");
+      initTextSize = e;
+      input.css("font-size", image1.height() / initTextSize);
+    }
+  </script>
+
+  <body>
+    <img src="./image1_back.png" id="backImage" />
+    <textarea
+      type="text"
+      id="mainInput"
+      cols="1"
+      rows="esdfgh"
+      placeholder="Bruh Moment"
+    ></textarea>
+    <img src="./image1_front.png" />
+
+    <input
+      type="range"
+      min="5"
+      max="30"
+      step="1"
+      value="20"
+      name="text_size"
+      id="sizer"
+      onchange="sliderChanged(this.value)"
+      oninput="sliderChanged(this.value)"
+    />
+    <label for="text_size">Text Size</label>
+  </body>
+</html>
