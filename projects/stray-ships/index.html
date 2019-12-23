@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<style>
+  #statsCheck {
+    position: fixed;
+    left: 5px;
+    top: 5px;
+  }
+  #mainSketch {
+    position: absolute;
+    left: 0px;
+    top: 0px;
+    z-index: -1;
+  }
+  #slider {
+    direction: rtl;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+  }
+</style>
+<title>Vadim Kim's Website</title>
+<script src="../../p5/p5.js"></script>
+<script src="../../sketch.js"></script>
+
+<body>
+  <div id="mainSketch"></div>
+  <div id="statsCheck">
+    <input
+      onclick="StatsCliked();"
+      type="checkbox"
+      id="statsForNerds"
+      unchecked
+    />
+    <label
+      for="scales"
+      style="color: aliceblue;
+                      font-size: 14px;
+                      text-decoration: none;
+                      font-family: 'Courier New', Courier, monospace"
+      >Cool Stats</label
+    >
+    <input
+      type="range"
+      min="1"
+      max="254"
+      value="60"
+      id="slider"
+      onchange="updateTrail();"
+    />
+    <label
+      for="slider"
+      style="color: aliceblue;
+                      font-size: 14px;
+                      text-decoration: none;
+                      font-family: 'Courier New', Courier, monospace"
+      >Trails</label
+    >
+  </div>
+</body>
