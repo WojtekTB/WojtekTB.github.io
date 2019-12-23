@@ -11,42 +11,46 @@
     text-decoration: none;
     font-size: 16px;
     font-family: "Courier New", Courier, monospace;
-    width: 50vw;
     line-height: 1.5;
   }
-  .j{
-    position: absolute;
-    left: 20px;
-    top: 0px;
-  }
   img{
-    width: 35vw;
-    position: absolute;
+    /* position: relative;
+    left: 52vw; */
+    max-width: 70vh;
+    /* position: absolute;
     left: 57.5vw;
-    top: 10px;
+    top: 10px; */
+  float: right;
+  margin: 0 0 1em 1em;
   }
   input{
-    width: 3.5vw;
+    width: 10vh;
+  }
+  body{
+    margin-left: 20px;
   }
 </style>
 <title>About me</title>
-  <body>
-    <div id="j">
-        <h2>Hey there,</h2>
-        <p>My name is Vadim. I am an aspiring programmer who is interested in all kinds of programming, starting from simple web-development, 
-          and all the way to computer vision and machine learning. I am currently in High - School, but later in life I hope to become a full 
-          stack developer. </p>
-          <p>As of now I am most confident when working with Javascript, Java, C#, Python, HTML, CSS, and AutoHotKey, but also 
-              have experience working with different electronics like Arduino and Raspberry Pi 3. I am confident that I can learn anything I put my mind to.
-              I am also interested in physics, history, and economics, although all to a lesser extent than computer science. Outside of academics, I am very 
-              interested in different video games such as Tetris, Tekken, and Legend of Zelda.</p>
-            </div>
-            <img src="picture.jpg" >
-            <form action="https://www.facebook.com/WojtekTB" style="display: inline-block;">
-              <input type="image" src="facebook.png">
-            </form>
-            <form action="https://www.linkedin.com/in/vadim-kim-8a1300168/" style="display: inline-block;">
-              <input type="image" src="linkedin.png">
-            </form>
+<body>
+  <div id="textAndImage">
+    <img src="picture.jpg" >
+    <h2>Hey there,</h2>
+    <p>My name is Vadim. I am an aspiring programmer who is interested in all kinds of programming, starting from simple web-development, 
+      and all the way to computer vision and machine learning. I am currently in High - School, but later in life I hope to become a full 
+      stack developer. </p>
+    <p>As of now I am most confident when working with Javascript, Java, C#, Python, HTML, CSS, and AutoHotKey, but also 
+        have experience working with different electronics like Arduino and Raspberry Pi 3. I am confident that I can learn anything I put my mind to.
+        I am also interested in physics, history, and economics, although all to a lesser extent than computer science. Outside of academics, I am very 
+        interested in different video games such as Tetris, Tekken, and Legend of Zelda.</p>
+
+  </div>
+      
+      <form action="https://www.facebook.com/WojtekTB" style="display: inline-block;">
+        <input type="image" src="facebook.png">
+      </form>
+      <form action="https://www.linkedin.com/in/vadim-kim-8a1300168/" style="display: inline-block;">
+        <input type="image" src="linkedin.png">
+      </form>
   </body>
+
 </div>
