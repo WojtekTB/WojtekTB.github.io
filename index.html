@@ -6,18 +6,43 @@
     top: 5px;
   }
   #mainSketch {
-    position: fixed;
+    position: absolute;
     left: 0px;
     top: 0px;
+    z-index: -1;
   }
-  #Resume-Button,
-  #Project-Button,
-  #aboutMeButton {
-    width: 10vw;
-    /* background-color: Transparent; */
+  #slider {
+    direction: rtl;
+  }
+  #main {
+    position: relative;
+    top: 30vh;
+    max-width: 80vh;
+    margin: auto;
+    /* border-style: solid;
+    border-width: 5px;
+    border-color: aliceblue; */
+    z-index: 10;
+    text-align: center;
+  }
+  .mainRows {
+    height: 50%;
+    width: 100%;
+  }
+  #avatarImage {
+    position: relative;
+    padding: 20px;
+    max-width: 20vh;
+    -webkit-filter: drop-shadow(1px 1px 0 white) drop-shadow(-1px -1px 0 white);
+    filter: drop-shadow(1px 1px 0 white) drop-shadow(-1px -1px 0 white);
+    vertical-align: middle;
+    z-index: 2;
+  }
+  .button {
+    position: relative;
     background-color: black;
     outline-color: transparent;
-    border: 2px solid whitesmoke;
+    border: 0.3vh solid whitesmoke;
     color: white;
     padding: 15px 15px;
     text-align: center;
@@ -26,73 +51,51 @@
     margin: 4px 2px;
     cursor: pointer;
     font-family: "Courier New", Courier, monospace;
-    opacity: 0;
-  }
-
-  #Project-Button {
-    transition: 0.5s;
-    transform: translateX(100%);
-    z-index: 3;
+    max-width: 25%;
+    width: 100%;
+    font-size: 2vh;
+    z-index: 1;
   }
   #Resume-Button {
     transition: 0.5s;
-    transform: translateX(-100%);
-    z-index: 3;
+    transform: translateX(100%);
+    opacity: 0;
   }
-  #aboutMeButton {
+  #Project-Button {
     transition: 0.5s;
-    transform: translateY(100%);
-    position: fixed;
-    left: 45vw;
-    top: 60vh;
+    transform: translateX(-100%);
+    opacity: 0;
   }
-
-  #avatarImage {
-    width: 10vw;
-    margin-top: 0px;
-    transform: translateY(70%);
-    margin: 20px;
-    -webkit-filter: drop-shadow(1px 1px 0 white) drop-shadow(-1px -1px 0 white);
-    filter: drop-shadow(1px 1px 0 white) drop-shadow(-1px -1px 0 white);
-    z-index: 3;
-  }
-  #allignmentContainer {
-    height: 45%;
-    width: 40%;
-    position: fixed;
-    left: 33vw;
-    top: 25vh;
-    display: inline-block;
-  }
-  #secondRow {
-    width: 100vw;
-    margin: auto;
-    display: block;
+  #AboutMe-Button {
+    transition: 0.5s;
+    transform: translateY(-150%);
+    opacity: 0;
   }
   #websiteTitle {
-    position: fixed;
-    left: 27.5vw;
-    top: 27.5vh;
-    width: 45vw;
-
+    max-width: 40vw;
+    text-align: center;
     opacity: 0;
-    transform: translateY(-100%);
+    transform: translateY(100%);
     transition: 0.5s;
   }
-  #allignmentContainer:hover #websiteTitle {
+  #main:hover #websiteTitle {
     transform: translateY(0%);
     transition: 0.5s;
     opacity: 1;
   }
 
-  #allignmentContainer:hover > #Project-Button,
-  #allignmentContainer:hover > #Resume-Button {
+  #main:hover #AboutMe-Button {
+    transform: translateY(0%);
     transition: 0.5s;
     opacity: 1;
-    transform: translateX(0%);
   }
-  #allignmentContainer:hover #aboutMeButton {
-    transform: translateY(0%);
+  #main:hover #Project-Button {
+    transform: translateX(0%);
+    transition: 0.5s;
+    opacity: 1;
+  }
+  #main:hover #Resume-Button {
+    transform: translateX(0%);
     transition: 0.5s;
     opacity: 1;
   }
@@ -100,31 +103,9 @@
 <title>Vadim Kim's Website</title>
 <script src="./p5/p5.js"></script>
 <script src="./sketch.js"></script>
-<div id="mainSketch">
-  <div id="allignmentContainer">
-    <button
-      id="Resume-Button"
-      onclick="window.location.href = './Vadim Kim - Resume.pdf';"
-    >
-      Resume
-    </button>
-    <img id="avatarImage" src="avatar.png" />
-    <button
-      id="Project-Button"
-      onclick="window.location.href = './page_projects/index.html'"
-    >
-      Projects
-    </button>
-    <div id="secondRow">
-      <button
-        id="aboutMeButton"
-        onclick="window.location.href = './page_about_me/index.html'"
-      >
-        About me
-      </button>
-    </div>
-    <img id="websiteTitle" src="vadim kim website.png" />
-  </div>
+
+<body>
+  <div id="mainSketch"></div>
   <div id="statsCheck">
     <input
       onclick="StatsCliked();"
@@ -135,9 +116,9 @@
     <label
       for="scales"
       style="color: aliceblue;
-    font-size: 14px;
-    text-decoration: none;
-    font-family: 'Courier New', Courier, monospace"
+                      font-size: 14px;
+                      text-decoration: none;
+                      font-family: 'Courier New', Courier, monospace"
       >Cool Stats</label
     >
     <input
@@ -151,28 +132,41 @@
     <label
       for="slider"
       style="color: aliceblue;
-    font-size: 14px;
-    text-decoration: none;
-    font-family: 'Courier New', Courier, monospace"
+                      font-size: 14px;
+                      text-decoration: none;
+                      font-family: 'Courier New', Courier, monospace"
       >Trails</label
     >
   </div>
+  <div id="main">
+    <img id="websiteTitle" src="vadim kim website.png" />
+    <div id="mainRow1" class="mainRows">
+      <button
+        id="Resume-Button"
+        class="button"
+        onclick="window.location.href = './Vadim Kim - Resume.pdf';"
+      >
+        Resume
+      </button>
 
-  <body>
-    <script>
-      function getCssProperty(elmId, property) {
-        let elem = document.getElementById(elmId);
-        return window.getComputedStyle(elem, null).getPropertyValue(property);
-      }
-      window.onresize = function(event) {
-        let projectButton = document.getElementById("Project-Button");
-        let resumeButton = document.getElementById("Resume-Button");
-        projectButton.style.left = `${window.innerWidth / 2 -
-          projectButton.offsetWidth -
-          10}px`;
-        resumeButton.style.left = `${window.innerWidth / 2 + 10}px`;
-      };
-      window.onresize();
-    </script>
-  </body>
-</div>
+      <img id="avatarImage" src="avatar.png" />
+
+      <button
+        class="button"
+        id="Project-Button"
+        onclick="window.location.href = './page_projects/index.html'"
+      >
+        Projects
+      </button>
+    </div>
+    <div id="mainRow2" class="mainRows">
+      <button
+        class="button"
+        id="AboutMe-Button"
+        onclick="window.location.href = './page_about_me/index.html'"
+      >
+        About me
+      </button>
+    </div>
+  </div>
+</body>
