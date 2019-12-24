@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<style>
+     * {
+       box-sizing: border-box;
+       }
+   body{
+       /* position: relative; */
+    background-color: black;
+  }
+  .imageButton{
+      width: 24vw;
+      z-index: 0;
+      position: relative;
+      top: 0px;
+      left: 0px;
+      border: solid;
+      border-width: 2px;
+      border-color: aliceblue;  
+      transition: 0.5s;
+  }
+
+  .image{
+      width: 24vw;
+      z-index: 2;    
+      position: absolute;
+      top: -1px;
+      left: 0px;
+      border: solid;
+      border-width: 2px;
+      border-color: aliceblue;  
+      transition: 0.5s;
+  }
+  .image:hover{
+      opacity: 0;
+
+      cursor: pointer;
+      transition: 0.5s;
+  }
+  .image:hover + .imageButton{
+      border-color:rgb(136, 237, 255);
+      color:rgb(136, 237, 255);
+      box-shadow: 0px 0px 70px rgba(136, 237, 255, 10);
+      transition: 0.4s;
+  }
+  .imageContainer{
+      position: relative;
+  }
+  .gridContainer {
+     display: grid;
+     /* transform: translate(0.5vw, 0px); */
+     grid-gap: 1vw;
+     grid-template-columns: repeat(4, 24vw);
+     grid-template-rows: repeat(2, 24vh);
+   }
+   h5{
+    position: absolute;
+    width: 24vw; 
+    top: -2vh;
+    left: 0;
+    z-index: 1;
+    background-color: Transparent;
+    outline-color: transparent;
+    color: white;
+    text-shadow:
+   -1px -1px 0 #000,  
+    1px -1px 0 #000,
+    -1px 1px 0 #000,
+     1px 1px 0 #000;
+    text-align: center;
+    text-decoration: none;
+    font-size: 16px;
+    font-family: "Courier New", Courier, monospace;
+   }
+   .documentationButton{
+    position: absolute;
+    bottom: 0px;
+    left: 0px;
+    width: 12vw;
+    height: 45px;
+    z-index: 1;
+    background-color: Transparent;
+    outline-color: transparent;
+    border: 2px solid transparent;
+    color: white;
+    text-shadow:
+   -1px -1px 0 #000,  
+    1px -1px 0 #000,
+    -1px 1px 0 #000,
+     1px 1px 0 #000;
+    text-align: center;
+    text-decoration: none;
+    font-size: 16px;
+    font-family: "Courier New", Courier, monospace;
+   }
+   .projectButton{
+    position: absolute;
+    bottom: 0px;
+    right: 0px;
+    width: 12vw;
+    height: 45px;
+    z-index: 1;
+    background-color: Transparent;
+    outline-color: transparent;
+    border: 2px solid transparent;
+    color: white;
+    text-shadow:
+   -1px -1px 0 #000,  
+    1px -1px 0 #000,
+    -1px 1px 0 #000,
+     1px 1px 0 #000;
+    text-align: center;
+    text-decoration: none;
+    font-size: 16px;
+    font-family: "Courier New", Courier, monospace;
+   }
+   h1{
+    width: 100vw;
+    height: 5vh; 
+    background-color: Transparent;
+    outline-color: transparent;
+    color: white;
+    text-align: center;
+    text-decoration: none;
+    padding: 10px 32px;
+    font-size: 16px;
+    font-family: "Courier New", Courier, monospace;
+   }
+   
+</style>
+<title>Projects page</title>
+  <body>
+      <h1>Projects</h1>
+      <div class="gridContainer">
+          <div class="imageContainer">
+              <h5>Cityscape</h5>
+              <img class="image" src="./statics/city.png" onclick="window.location.href = '../projects/city/index.html'">
+              <input class="imageButton" type="image" src="./gifs/city.gif">
+            </div>
+            <div class="imageContainer">
+                <img class="image" src="./statics/monipix.png" onclick="window.location.href = '../projects/monipix/index.html'">
+                <input class="imageButton" type="image" src="./gifs/monipix.gif">
+                <h5>Monipix</h5>
+            </div>
+            <div class="imageContainer">
+                <img class="image" src="./statics/outrun.png" onclick="window.location.href = '../projects/outrun/index.html'">
+                <input class="imageButton" type="image" src="./gifs/outrun.gif">
+                <h5>Outrun the Wave</h5>
+            </div>
+            <div class="imageContainer">
+                <img class="image" src="./statics/planets.png" onclick="window.location.href = '../projects/planets'">
+                <input class="imageButton" type="image" src="./gifs/planets.gif">
+                <h5>Planets</h5>
+            </div>
+            <div class="imageContainer">
+                <img class="image" src="./statics/silos.png" onclick="window.location.href = '../projects/silos/index.html'">
+                <input class="imageButton" type="image" src="./gifs/silos.gif">
+                <h5>Silos</h5>
+          </div>
+          
+      </div>
+</body>
+</div>
