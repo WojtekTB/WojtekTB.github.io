@@ -9,7 +9,7 @@
     <style>
       .intro {
         opacity: 100%;
-        content: url("./images/static/static.png");
+        content: url("./images/static/static0.png");
       }
       .placeholder {
         content: url("./images/bottomPlaceholder.png");
@@ -40,28 +40,32 @@
     <script>
       //when the webpage loads
       $(document).ready(() => {
-        document.getElementById("static-audio").play();
-        //code for the initial static fade
-        let opacity = 100;
-        let imageCount = 0;
-        let maxImageCount = 5;
-        let fadeIntervalId = setInterval(() => {
-          let intro = $(".intro");
-          intro.css("opacity", opacity + "%");
-          intro.css(
-            "content",
-            'url("./images/static/static' + imageCount + '.png")'
-          );
-          opacity -= 1;
-          imageCount++;
-          if (imageCount > maxImageCount) {
-            imageCount = 0;
-          }
-          if (opacity < 0) {
-            clearInterval(fadeIntervalId);
-            console.log("finished looping");
-          }
-        }, 30);
+        document
+          .getElementById("static-audio")
+          .play()
+          .then(() => {
+            //code for the initial static fade
+            let opacity = 100;
+            let imageCount = 0;
+            let maxImageCount = 5;
+            let fadeIntervalId = setInterval(() => {
+              let intro = $(".intro");
+              intro.css("opacity", opacity + "%");
+              intro.css(
+                "content",
+                'url("./images/static/static' + imageCount + '.png")'
+              );
+              opacity -= 1;
+              imageCount++;
+              if (imageCount > maxImageCount) {
+                imageCount = 0;
+              }
+              if (opacity < 0) {
+                clearInterval(fadeIntervalId);
+                console.log("finished looping");
+              }
+            }, 30);
+          });
       });
     </script>
   </body>
