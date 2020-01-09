@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Landing Page</title>
+
+    <style>
+      .intro {
+        opacity: 100%;
+        content: url("./images/static/static.png");
+      }
+      .placeholder {
+        content: url("./images/bottomPlaceholder.png");
+      }
+      #overlay {
+        position: absolute;
+        top: 0px;
+        left: 0px;
+        width: 100vw;
+        height: 100vh;
+        background: black;
+      }
+    </style>
+
+    <script
+      src="https://code.jquery.com/jquery-3.4.1.min.js"
+      integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
+      crossorigin="anonymous"
+    ></script>
+  </head>
+  <body>
+    <audio controls id="static-audio">
+      <source src="./audio/static.mp3" type="audio/mp3" />
+      Your browser does not support the audio element.
+    </audio>
+    <div id="overlay" class="placeholder"></div>
+    <div id="overlay" class="intro"></div>
+    <script>
+      //when the webpage loads
+      $(document).ready(() => {
+        document.getElementById("static-audio").play();
+        //code for the initial static fade
+        let opacity = 100;
+        let imageCount = 0;
+        let maxImageCount = 5;
+        let fadeIntervalId = setInterval(() => {
+          let intro = $(".intro");
+          intro.css("opacity", opacity + "%");
+          intro.css(
+            "content",
+            'url("./images/static/static' + imageCount + '.png")'
+          );
+          opacity -= 1;
+          imageCount++;
+          if (imageCount > maxImageCount) {
+            imageCount = 0;
+          }
+          if (opacity < 0) {
+            clearInterval(fadeIntervalId);
+            console.log("finished looping");
+          }
+        }, 30);
+      });
+    </script>
+  </body>
+</html>
