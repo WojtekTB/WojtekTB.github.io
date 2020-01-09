@@ -9,7 +9,7 @@
     <style>
       .intro {
         opacity: 100%;
-        content: url("./images/static/static0.png");
+        /* content: url("./images/static/static0.png"); */
       }
       .placeholder {
         content: url("./images/bottomPlaceholder.png");
@@ -21,6 +21,24 @@
         width: 100vw;
         height: 100vh;
         background: black;
+      }
+      #startButton {
+        position: absolute;
+        top: 50vh;
+        left: 50vw;
+        background-color: black;
+        outline-color: transparent;
+        border: 0.3vh solid whitesmoke;
+        color: white;
+        padding: 15px 15px;
+        text-align: center;
+        text-decoration: none;
+        font-size: 16px;
+        margin: 4px 2px;
+        cursor: pointer;
+        font-family: "Courier New", Courier, monospace;
+        display: block;
+        font-size: 2vh;
       }
     </style>
 
@@ -37,9 +55,29 @@
     </audio>
     <div id="overlay" class="placeholder"></div>
     <div id="overlay" class="intro"></div>
+    <button id="startButton" onclick="begin()">Start</button>
+
     <script>
       //when the webpage loads
       $(document).ready(() => {
+        //code for the initial static fade
+        let opacity = 0;
+        let imageCount = 0;
+        let maxImageCount = 5;
+        let fadeIntervalId = setInterval(() => {
+          let button = $("#startButton");
+          button.css("opacity", opacity + "%");
+          opacity += 5;
+          imageCount++;
+          if (opacity > 100) {
+            clearInterval(fadeIntervalId);
+          }
+        }, 30);
+      });
+
+      var begin = () => {
+        let button = $("#startButton");
+        button.css("opacity", 0 + "%");
         document
           .getElementById("static-audio")
           .play()
@@ -66,7 +104,7 @@
               }
             }, 30);
           });
-      });
+      };
     </script>
   </body>
 </html>
