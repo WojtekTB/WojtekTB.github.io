@@ -13,6 +13,8 @@ var mapOffsetY = -gridScale;
 var mapGrid;
 var items = [];
 
+var workTiles = [];
+
 function preload() {
   animationFrames_conveyor.push(
     loadImage("./animation-conveyor/conveyor-frame-0.png")
@@ -33,21 +35,30 @@ function setup() {
   let myCanvas = createCanvas(innerWidth, innerHeight);
   myCanvas.parent("mainSketch");
   background(0);
-  mapGrid = new Grid(gridScale);
+  mapGrid = new Grid(gridScale, workTiles);
   mapGrid.populate(200, 200);
   //   item = new Item_Test(0, 0, mapGrid);
+  mapGrid.show(mapOffsetX, mapOffsetY);
+  debugGrid(gridScale);
 }
 
 function draw() {
-  background(0);
-  debugGrid(gridScale);
-  mapGrid.show(mapOffsetX, mapOffsetY);
+  // background(0);
+  mapGrid.show(mapOffsetX, mapOffsetY, workTiles);
   for (item of items) {
-    item.show();
+    item.show(mapGrid);
     item.run();
   }
+  fill(100);
+  stroke(200);
+  rect(5, 5, 200, 100);
   fill(255);
+  noStroke();
   text("WASD - place conveyors \nQ - place item \nE - empty the space", 10, 20);
+  let fps = frameRate();
+  fill(255);
+  stroke(0);
+  // text("FPS: " + fps.toFixed(2), 10, height - 10);
 }
 
 function debugGrid(scale) {
@@ -93,21 +104,32 @@ function keyPressed() {
 }
 
 class Grid {
-  constructor(scale) {
+  constructor(scale, workTiles) {
     this.grid = [];
     this.scale = scale;
     this.removeQueue = [];
     this.w = 0;
     this.h = 0;
+    this.workTiles = workTiles;
   }
 
-  show(startX, startY) {
-    for (let y = 0; y < this.grid.length; y++) {
-      for (let x = 0; x < this.grid[0].length; x++) {
-        this.grid[y][x].show(
-          x * this.scale + startX,
-          y * this.scale + startY,
-          this.scale
+  show(startX, startY, tiles) {
+    if(!tiles){
+      for (let y = 0; y < this.grid.length; y++) {
+        for (let x = 0; x < this.grid[0].length; x++) {
+          this.grid[y][x].show(
+            x * this.scale + startX,
+            y * this.scale + startY,
+            this
+          );
+        }
+      }
+    }else{
+      for(let i = 0; i < workTiles.length; i++){
+        this.grid[workTiles[i].y][workTiles[i].x].show(
+          workTiles[i].x * this.scale + startX,
+          workTiles[i].y * this.scale + startY,
+          this
         );
       }
     }
@@ -139,6 +161,7 @@ class Grid {
     let gridY = Math.floor(y / this.scale);
     let newCell = new Cell_Conveyor(direction, speed);
     this.grid[gridY][gridX] = newCell;
+    this.workTiles.push({x: Math.floor(x/ this.scale), y: Math.floor(y/ this.scale)});
     // console.log(newCell);
   }
 
@@ -146,5 +169,6 @@ class Grid {
     let gridX = Math.floor(x / this.scale);
     let gridY = Math.floor(y / this.scale);
     this.grid[gridY][gridX] = new Cell_Empty();
+    this.grid[gridY][gridX].show(gridX, gridY, this.scale);
   }
 }
