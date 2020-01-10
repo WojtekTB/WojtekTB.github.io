@@ -10,6 +10,15 @@ class Item_Test {
 
   show() {
     // fill(255, 0, 0);
+
+    let gridX = Math.floor(this.x / this.grid.scale);
+    let gridY = Math.floor(this.y / this.grid.scale);
+
+    let cell = this.grid.grid[gridY][gridX];
+    if(cell instanceof Cell_Empty){
+      cell.show(gridX * this.grid.scale + mapOffsetX, gridY * this.grid.scale + mapOffsetY, this.grid);
+    }
+
     let width = 20;
     image(
       test_item_image,
