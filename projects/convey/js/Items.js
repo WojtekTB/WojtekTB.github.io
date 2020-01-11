@@ -14,6 +14,7 @@ class Item_Test {
     let gridX = Math.floor(this.x / this.grid.scale);
     let gridY = Math.floor(this.y / this.grid.scale);
 
+    // console.log(gridX, gridY)
     let cell = this.grid.grid[gridY][gridX];
     if(cell instanceof Cell_Empty){
       cell.show(gridX * this.grid.scale + mapOffsetX, gridY * this.grid.scale + mapOffsetY, this.grid);

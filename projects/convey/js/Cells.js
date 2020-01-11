@@ -1,3 +1,5 @@
+var globalConvSpeed = 5/10;
+
 class Cell_Empty {
   show(x, y, grid) {
     let scale = grid.scale;
@@ -82,7 +84,7 @@ class Cell_Conveyor {
       );
       rotate(PI);
     }
-    this.innerFrameCounter += this.speed;
+    this.innerFrameCounter += globalConvSpeed;
     if (this.innerFrameCounter > this.maxFrames) {
       this.innerFrameCounter = 0;
     }
@@ -91,16 +93,20 @@ class Cell_Conveyor {
 
   item_action(item) {
     if (this.direction_right) {
-        item.vx += this.speed * 4;
+        // item.vx += this.speed;
+        item.vx += this.speed + globalConvSpeed;
       // item.vx += this.speed * (5 * random(0.2, 1));
     } else if (this.direction_up) {
-        item.vy -= this.speed * 4;
+        // item.vy -= this.speed;
+        item.vy -= this.speed + globalConvSpeed;
       // item.vy -= this.speed * (5 * random(0.2, 1));
     } else if (this.direction_left) {
-        item.vx -= this.speed * 4;
+        // item.vx -= this.speed;
+        item.vx -= this.speed + globalConvSpeed;
       // item.vx -= this.speed * (5 * random(0.2, 1));
     } else if (this.direction_down) {
-        item.vy += this.speed * 4;
+        // item.vy += this.speed;
+        item.vy += this.speed + globalConvSpeed;
       // item.vy += this.speed * (5 * random(0.2, 1));
     }
 
@@ -113,4 +119,8 @@ class Cell_Conveyor {
     //   grid.scale
     // );
   }
+}
+
+class Cell_Collector{
+  
 }

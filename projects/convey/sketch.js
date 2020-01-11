@@ -49,16 +49,22 @@ function draw() {
     item.show(mapGrid);
     item.run();
   }
-  fill(100);
-  stroke(200);
-  rect(5, 5, 200, 100);
-  fill(255);
-  noStroke();
-  text("WASD - place conveyors \nQ - place item \nE - empty the space", 10, 20);
-  let fps = frameRate();
-  fill(255);
-  stroke(0);
-  // text("FPS: " + fps.toFixed(2), 10, height - 10);
+  // fill(100);
+  // stroke(200);
+  // rect(5, 5, 200, 100);
+  // fill(255);
+  // noStroke();
+  // // text("WASD - place conveyors \nQ - place item \nE - empty the space", 10, 20);
+  // let fps = frameRate();
+  // fill(255);
+  // stroke(0);
+  // // text("FPS: " + fps.toFixed(2), 10, height - 10);
+}
+
+function changeSpeed(){
+  let e = parseInt( document.getElementById("slider").value);
+  console.log(e);
+  globalConvSpeed = parseInt(e)/10;
 }
 
 function debugGrid(scale) {
