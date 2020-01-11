@@ -5,6 +5,17 @@
     left: 0px;
     top: 0px;
   }
+  #options{
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    color: white;
+    background: rgb(100, 100, 100);
+    /* stroke: rgb(200, 200, 200);
+    stroke: 2px; */
+    padding: 10px;
+    display: block;
+  }
 </style>
 <title>Convey</title>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.10.2/p5.js"></script>
@@ -14,3 +25,16 @@
 <div id="mainSketch">
   <body></body>
 </div>
+      <div id="options">
+        <p>
+          WASD - place conveyors 
+        </p>
+        <p>
+          Q - place item 
+        </p>
+        <p>
+          E - empty the space
+        </p>
+        <input name="speed-slider" type="range" id="slider" min="0" max="10" value="5" step="1" onchange="changeSpeed()">
+        <label for="speed-slider">Speed of conveyors</label>
+      </div>
