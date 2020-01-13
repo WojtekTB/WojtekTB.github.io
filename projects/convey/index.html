@@ -15,6 +15,13 @@
     stroke: 2px; */
     padding: 10px;
     display: block;
+    /* pointer-events: none; */
+    opacity: 100%;
+    transition: 0.25s;
+  }
+  #options:hover{
+    background: transparent;
+    transition: 0.25s;
   }
 </style>
 <title>Convey</title>
@@ -22,19 +29,25 @@
 <script src="./sketch.js"></script>
 <script src="./js/Items.js"></script>
 <script src="./js/Cells.js"></script>
+<script src="./js/Grid.js"></script>
+<script src="./js/Toolbar.js"></script>
 <div id="mainSketch">
   <body></body>
 </div>
       <div id="options">
         <p>
-          WASD - place conveyors 
+          - Press Q to spawn items
         </p>
         <p>
-          Q - place item 
+          - Scroll to change toolbar options
         </p>
         <p>
-          E - empty the space
+          - Press R to rotate direction of the block
+        </p>
+        <p>
+          - Click to place selected item
         </p>
         <input name="speed-slider" type="range" id="slider" min="0" max="10" value="5" step="1" onchange="changeSpeed()">
         <label for="speed-slider">Speed of conveyors</label>
       </div>
+      
