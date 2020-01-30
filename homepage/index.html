@@ -11,8 +11,8 @@
         opacity: 100%;
         /* content: url("./images/static/static0.png"); */
       }
-      .placeholder {
-        content: url("./images/bottomPlaceholder.png");
+      .VCR_color {
+        background: blue;
       }
       #overlay {
         position: absolute;
@@ -20,7 +20,6 @@
         left: 0px;
         width: 100vw;
         height: 100vh;
-        background: black;
       }
       #startButton {
         position: absolute;
@@ -40,6 +39,33 @@
         display: block;
         font-size: 2vh;
       }
+      #VCR{
+        position: absolute;
+        top: 0px;
+        left: 0px;
+        width: 100vw;
+        height: 100vh;
+      }
+      #stop_play{
+        position: absolute;
+        top: 6vh;
+        left: 6.5vw;
+      }
+      #player_time{
+        position: absolute;
+        top: 6vh;
+        left: 64vw;
+      }
+      #recording_model{
+        position: absolute;
+        top: 72vh;
+        left: 7vw;
+      }
+      #time{
+        position: absolute;
+        top: 72vh;
+        left: 27vw;
+      }
     </style>
 
     <script
@@ -49,62 +75,76 @@
     ></script>
   </head>
   <body>
-    <audio controls id="static-audio">
-      <source src="./audio/static.mp3" type="audio/mp3" />
-      Your browser does not support the audio element.
-    </audio>
-    <div id="overlay" class="placeholder"></div>
+    <div id="overlay" class="VCR_color"></div>
+    <div id="VCR">
+      <img id="stop_play" src="./images/VCR/Stop.png">
+      <img id="player_time" src="./images/VCR/Player Time.png">
+      <img id="recording_model" src="./images/VCR/SLP.png">
+      <img id="time" src="./images/VCR/Time.png">
+    </div>
     <div id="overlay" class="intro"></div>
-    <button id="startButton" onclick="begin()">Start</button>
+
 
     <script>
-      var begin = function() {};
-      //when the webpage loads
-      $(document).ready(() => {
+      //Define image paths
+      var PLAY = "./images/VCR/Play.png";
+      var STOP = "./images/VCR/Stop.png";
+
+
+      var fadeIntervalId;
+      var begin = () => {
         //code for the initial static fade
-        let opacity = 0;
+        let opacity = 100;
         let imageCount = 0;
         let maxImageCount = 5;
-        let fadeIntervalId = setInterval(() => {
-          let button = $("#startButton");
-          button.css("opacity", opacity + "%");
-          opacity += 5;
+        fadeIntervalId = setInterval(() => {
+          let intro = $(".intro");
+          intro.css("opacity", opacity + "%");
+          intro.css(
+            "content",
+            'url("./images/static/static' + imageCount + '.png")'
+          );
+          opacity -= 1;
           imageCount++;
-          if (opacity > 100) {
+          if (imageCount > maxImageCount) {
+            imageCount = 0;
+          }
+          if (opacity < 0) {
+            sleep(800).then(()=>{
+          glitch();
+          sleep(50).then(()=>{
+            unglitch();
+          });
+        });
             clearInterval(fadeIntervalId);
-            begin = () => {
-              let button = $("#startButton");
-              button.css("opacity", 0 + "%");
-              document
-                .getElementById("static-audio")
-                .play()
-                .then(() => {
-                  //code for the initial static fade
-                  let opacity = 100;
-                  let imageCount = 0;
-                  let maxImageCount = 5;
-                  let fadeIntervalId = setInterval(() => {
-                    let intro = $(".intro");
-                    intro.css("opacity", opacity + "%");
-                    intro.css(
-                      "content",
-                      'url("./images/static/static' + imageCount + '.png")'
-                    );
-                    opacity -= 1;
-                    imageCount++;
-                    if (imageCount > maxImageCount) {
-                      imageCount = 0;
-                    }
-                    if (opacity < 0) {
-                      clearInterval(fadeIntervalId);
-                      console.log("finished looping");
-                    }
-                  }, 30);
-                });
-            };
+            console.log("finished looping");
           }
         }, 30);
-      });
+        
+      };
+      //make a slee function
+      const sleep = (milliseconds) => {
+        return new Promise(resolve => setTimeout(resolve, milliseconds))
+      }
+      //define skip
+      var skip = () => {
+        if(fadeIntervalId === null){
+          return;
+        }
+        clearInterval(fadeIntervalId);
+        $(".intro").css("opacity", 0 + "%");
+      }
+      //define glitch
+      var glitch = ()=>{
+        $(`#VCR`).css(`transform`, `rotateX(50deg) rotateZ(30deg) rotateY(-20deg)`);
+      }
+      var unglitch = ()=>{
+        $(`#VCR`).css(`transform`, ``);
+      }
+      //when the webpage loads play the static fade
+      $(window).on("load", begin);
+      //skip if clicked
+      $(`body`).click(skip);
     </script>
   </body>
 </html>
