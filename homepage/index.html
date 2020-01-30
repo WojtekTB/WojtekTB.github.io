@@ -110,12 +110,16 @@
             imageCount = 0;
           }
           if (opacity < 0) {
-            sleep(800).then(()=>{
-          glitch();
-          sleep(50).then(()=>{
-            unglitch();
+            sleep(300).then(()=>{
+              glitch();
+              $(`#stop_play`).css(
+                "content",
+                'url("' + PLAY + '")'
+              );
+              sleep(50).then(()=>{
+                unglitch();
+              });
           });
-        });
             clearInterval(fadeIntervalId);
             console.log("finished looping");
           }
@@ -133,6 +137,14 @@
         }
         clearInterval(fadeIntervalId);
         $(".intro").css("opacity", 0 + "%");
+        glitch();
+              $(`#stop_play`).css(
+                "content",
+                'url("' + PLAY + '")'
+              );
+              sleep(50).then(()=>{
+                unglitch();
+              });
       }
       //define glitch
       var glitch = ()=>{
