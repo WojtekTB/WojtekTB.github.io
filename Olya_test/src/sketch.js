@@ -9,11 +9,11 @@ let shipX, shipY;
 let ship;
 
 function preload() {
-  cirTexture = loadImage("../assets/gold.png");
-  sqTexture = loadImage("../assets/metal.png");
-  trTexture = loadImage("../assets/glass.png");
-  bgImage = loadImage("../assets/background.jpg");
-  shipImage = loadImage("../assets/spaceship.png");
+  cirTexture = loadImage("./assets/gold.png");
+  sqTexture = loadImage("./assets/metal.png");
+  trTexture = loadImage("./assets/glass.png");
+  bgImage = loadImage("./assets/background.jpg");
+  shipImage = loadImage("./assets/spaceship.png");
   shipX = windowWidth * 0.4;
   shipY = windowHeight * 0.7;
 }
