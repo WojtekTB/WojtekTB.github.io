@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>gif in browser</title>
+    <script src="./gif.js"></script>
+  </head>
+
+  <style>
+    #gifPreviewDiv {
+      width: 40vw;
+    }
+    #controlls {
+      width: 40vw;
+      padding: 10px;
+    }
+    #frameStrip {
+      width: 95vw;
+    }
+  </style>
+
+  <body>
+    <h1>Gif in browser</h1>
+    <hr />
+    <h2>Step 1: select files</h2>
+
+    <label for="myfile">Select a files:</label>
+    <input
+      type="file"
+      id="imageUpload"
+      accept="image/*"
+      onchange="addImage(event)"
+      multiple
+    />
+
+    <hr />
+    <h2>Step 2: select settings</h2>
+
+    <div>
+      <div id="controlls" style="float: left; padding: 20px;">
+        <div>
+          <input
+            type="checkbox"
+            id="autoscrollCheckbox"
+            onchange="previewAnimationChange(event)"
+          />
+          <label for="autoscrollCheckbox">Play preview</label>
+          <button onclick="scrollPreviousPreview()">previous</button>
+          <button onclick="scrollNextPreview()">next</button>
+        </div>
+
+        <div style="padding: 10px;">
+          <input
+            type="number"
+            id="playspeedInput"
+            onchange="changeSpeed(event)"
+            value="2"
+          />
+          <label for="playspeedInput">frames/second</label>
+        </div>
+
+        <div style="padding: 10px;">
+          <input
+            type="range"
+            id="qualitySlider"
+            min="0"
+            max="20"
+            step="1"
+            value="10"
+            onchange="changeQuality(event)"
+          />
+          <label for="qualitySlider" id="qualitySliderLabel">Quality: 10</label>
+        </div>
+        <div>
+          <button onclick="makeGif()">Create your gif</button>
+        </div>
+      </div>
+
+      <div id="gifPreviewDiv" style="float: left;">
+        <h3 id="previewLabel">Preview your gif:</h3>
+        <img src="./noimg.jpeg" id="previewElement" style="max-width: 45vw;" />
+      </div>
+    </div>
+    <div id="frameStrip">
+      <hr style="width:100vw" />
+    </div>
+    <div id="frameStripDiv">
+        <h2>Step 3: adjust frames
+      <h3>Gif frames:</h3>
+    </div>
+    <hr />
+    <div>
+            <h2>Step 4: save your gif!
+      <h3>Your gif (right click to save):</h3>
+      <img src="" id="yourGif" />
+    </div>
+  </body>
+
+  <script>
+    var previewFramesImages = [];
+    var frameStripElements = [];
+    var currentFrameId = 0;
+    var delayBetweenFrames = 500; //in ms
+    var animationInterval;
+    var quality = 10;
+
+    previewAnimationChange = event => {
+      //check if there are any images uploaded
+      if (previewFramesImages.length < 1) {
+        return;
+      }
+      if (event.target.checked) {
+        makeNewAnimationInterval();
+      } else {
+        stopOldAnimationInterval();
+      }
+    };
+
+    changeQuality = event => {
+      //change label and set quality variable to a new value
+      quality = event.target.value;
+      let qualitySliderLabel = document.getElementById("qualitySliderLabel");
+      qualitySliderLabel.innerHTML = `Quality: ${quality}`;
+    };
+
+    makeNewAnimationInterval = () => {
+      animationInterval = setInterval(scrollNextPreview, delayBetweenFrames);
+    };
+
+    stopOldAnimationInterval = () => {
+      clearInterval(animationInterval);
+    };
+
+    changeSpeed = event => {
+      //set a new value for speed
+      delayBetweenFrames = 1000 / parseFloat(event.target.value);
+      stopOldAnimationInterval();
+      makeNewAnimationInterval();
+    };
+
+    addFrameToFrameStrip = src_ => {
+      //make a new image element
+      let frameStripDiv = document.getElementById("frameStripDiv");
+      let newImageElement = document.createElement("IMG");
+      newImageElement.src = src_;
+      newImageElement.style.width = `9vw`; //might want to change that later?
+      newImageElement.style.borderStyle = "groove";
+      newImageElement.style.borderColor = "black";
+      newImageElement.selected = false;
+      
+      //save it in an array for later
+      frameStripElements.push(newImageElement);
+      //append to div
+      frameStripDiv.append(newImageElement);
+    };
+
+    addImage = event => {
+      let gifPreviewDiv = document.getElementById("gifPreviewDiv");
+      gifPreviewDiv.style.visibility = "visible";
+      for (let image of event.target.files) {
+        //save url
+        let imgSrc = URL.createObjectURL(image);
+        previewFramesImages.push(imgSrc);
+        addFrameToFrameStrip(imgSrc);
+      }
+      //set preview to initial frame
+      let previewElement = document.getElementById("previewElement");
+      previewElement.src = previewFramesImages[0];
+    };
+
+    scrollNextPreview = () => {
+      //check if there are any images uploaded
+      if (previewFramesImages.length < 1) {
+        return;
+      }
+      //unhighlight the previous frame on frame strip
+      frameStripElements[currentFrameId].style.borderColor = "black";
+
+      //set next image id
+      currentFrameId++;
+      if (currentFrameId > previewFramesImages.length - 1) {
+        currentFrameId = 0;
+      }
+
+      //set preview to next frame
+      let previewElement = document.getElementById("previewElement");
+      previewElement.src = previewFramesImages[currentFrameId];
+
+      //highlight the next frame on frame strip
+      frameStripElements[currentFrameId].style.borderColor = "yellow";
+    };
+    scrollPreviousPreview = () => {
+      //check if there are any images uploaded
+      if (previewFramesImages.length < 1) {
+        return;
+      }
+      //unhighlight the previous frame on frame strip
+      frameStripElements[currentFrameId].style.borderColor = "black";
+
+      //set next image id
+      currentFrameId--;
+      if (currentFrameId < 0) {
+        currentFrameId = previewFramesImages.length - 1;
+      }
+
+      //set preview to next frame
+      let previewElement = document.getElementById("previewElement");
+      previewElement.src = previewFramesImages[currentFrameId];
+
+      //highlight the next frame on frame strip
+      frameStripElements[currentFrameId].style.borderColor = "yellow";
+    };
+
+    makeGif = () => {
+        if(frameStripElements.length < 1){
+            alert("Select your images first!");
+            return;
+        }
+      var gif = new GIF({
+        workers: 2,
+        quality: quality
+      });
+
+      for (let i = 0; i < frameStripElements.length; i++) {
+        //make buffer image element to add as a frame in full size
+        let bufferImageElement = document.createElement("IMG");
+        bufferImageElement.src = frameStripElements[i].src;
+        gif.addFrame(bufferImageElement, {delay: delayBetweenFrames});
+      }
+
+      gif.on("finished", function(blob) {
+        let gifUrl = URL.createObjectURL(blob);
+        let yourGif = document.getElementById("yourGif");
+        yourGif.src = gifUrl;
+      });
+
+      gif.render();
+    };
+  </script>
+</html>
