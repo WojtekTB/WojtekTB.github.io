@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dino-nn</title>
+    <script src="./NeuralNet.js"></script>
+    <script src="./sketch.js"></script>
+    <script src="./graph.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.0.0/p5.js"></script>
+
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/chartist.js/latest/chartist.min.css" />
+    <script src="//cdn.jsdelivr.net/chartist.js/latest/chartist.min.js"></script>
+
+    <h1>
+        Chrome Dinosaur Neural Network Experiment
+    </h1>
+</head>
+
+<body>
+    <div style="padding: 2vw; float: left;">
+        <div id="mainCanvas" style="outline-style: solid; "></div>
+        <div style="width: 45vh; padding-top: 20px;"></div>
+        <div class="ct-chart ct-perfect-fourth" style="width: 45vh; padding-top: 20px;"></div>
+    </div>
+    <div style="padding: 1vw;float: left;">
+        <hr>
+        <h3 id="GenNum">Generation number: 0</h3>
+        <h3 id="BestFit">Best fitness so far: 0</h3>
+        <h3 id="PlayersAlive">Players alive: 100</h3>
+        <hr>
+        <div style="padding: 5px;">
+            <label id="MutationRateLabel" >Mutation rate:</label>
+            <input type="number" for="MutationRateLabel" step="0.01" min="0" max="1" style="float: right; width: 5vw;" id="Mutation" onchange="changeMutationInput()">
+        </div>
+        <div style="padding: 5px;">
+            <label id="NumberOfPlayersPerGenLabel" >Players per generation:</label>
+            <input type="number" for="NumberOfPlayersPerGenLabel" step="1" style="float: right; width: 5vw;" id="NumberOfPlayersPerGen" onchange="changeNumberOfPlayersPerGenInput()">
+        </div>
+        <div style="padding: 5px;">
+            <label id="SpeedLabel" >Speed of training:</label>
+            <input type="range" for="SpeedLabel" step="1" style="float: right; width: 5vw;" min="1" max="200"  id="Speed" onchange="changeSpeedInput()">
+        </div>
+        <hr>
+        <div>
+            <label id="PrettyLabel" >Pretty: </label>
+            <input type="checkbox" for="PrettyLabel" step="1" style="float: right; width: 5vw;" min="1" max="200"  id="Pretty" checked onchange="changePretty()">
+        </div>
+    </div>
+</body>
+
+<script>
+    function changePretty(){
+        let e = document.getElementById("Pretty");
+        pretty = e.checked;
+    }
+
+    function changeMutationInput(){
+        let e = document.getElementById("Mutation");
+        mutationRate = parseFloat(e.value);
+    }
+    
+    function changeSpeedInput(){
+        let e = document.getElementById("Speed");
+        cycles = parseFloat(e.value);
+    }
+    
+    function changeNumberOfPlayersPerGenInput(){
+        let e = document.getElementById("NumberOfPlayersPerGen");
+        populationSize = parseFloat(e.value);   
+    }
+</script>
+
+</html>
