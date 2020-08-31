@@ -46,12 +46,12 @@ var backgroundSketch = function(p){
     carimage = p.loadImage("./images/bus.png");
     cloudimage = p.loadImage("./images/cloud.png");
     sunImage = p.loadImage("./images/sun.png");
-    ambSound = p.loadSound("./sounds/traffic.mp3");
+    // ambSound = p.loadSound("./sounds/traffic.mp3");
   }
   p.setup = function(){
     currentTime = p.hour();
-    ambSound.setVolume(0.19);
-    ambSound.play();
+    // ambSound.setVolume(0.19);
+    // ambSound.play();
     p.drawBackground();
     p.drawLayer1();
     p.drawLayer2();
