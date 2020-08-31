@@ -1,23 +1,27 @@
 <!DOCTYPE html>
 <style>
-   body{
-       /* position: relative; */
-    background-color: black;
-    /* padding: 2vh; */
-    text-align: center;
-  }
-  .projectCell{
-      border: solid;
-      border-color: aliceblue;
-      display: inline-block;
-      margin-top: 20px;
-      padding: 10px;
-  }
-  .projectCell-image{   
-      width: 30vw;
-      cursor: pointer;
-  }
-  h1, p{
+    body {
+        /* position: relative; */
+        background-color: black;
+        /* padding: 2vh; */
+        text-align: center;
+    }
+
+    .projectCell {
+        border: solid;
+        border-color: aliceblue;
+        display: inline-block;
+        margin-top: 20px;
+        padding: 10px;
+    }
+
+    .projectCell-image {
+        width: 30vw;
+        cursor: pointer;
+    }
+
+    h1,
+    p {
         color: aliceblue;
         background-color: Transparent;
         outline-color: transparent;
@@ -27,29 +31,32 @@
         line-height: 1.5;
         margin-top: 0;
         /* max-width: 25vw; */
-  }
-  h1{
-    font-size: 24px;
-    cursor: pointer;
-  }
-  p{
-    font-size: 19px;
-  }
-  .projectCell-text{
-    float: right;
-    margin: 20px;
-    max-width: 30vw;
-  }
-  .projectCell-tech{
-    font-size: 14px;
-    margin-left: 5px;
-    width: 50%;
-    /* float: bottom; */
-  }
-  
-   
+    }
+
+    h1 {
+        font-size: 24px;
+        cursor: pointer;
+    }
+
+    p {
+        font-size: 19px;
+    }
+
+    .projectCell-text {
+        float: right;
+        margin: 20px;
+        max-width: 30vw;
+    }
+
+    .projectCell-tech {
+        font-size: 14px;
+        margin-left: 5px;
+        width: 50%;
+        /* float: bottom; */
+    }
 </style>
 <title>Projects page</title>
+
 <body>
     <!-- <div class="projectCell">
         <div class="projectCell-text">
@@ -61,18 +68,31 @@
     </div> -->
     <div class="projectCell">
         <div class="projectCell-text">
-            <h1 onclick="window.location.href = '../projects/city/index.html'">CityScape</h1>
-            <p>Computer-generated scene of a busy city with hand-drawn sprites in a pixel-art style. Dynamically adjusts lighting based on your local time</p>
+            <h1 onclick="window.location.href = '../projects/dino-nn/index.html'">Dino-nn</h1>
+            <p>A set of neural networks trying to improve at the chrome dinosour game.</p>
         </div>
-        <img class="projectCell-image" src="./gifs/city.gif" onclick="window.location.href = '../projects/city/index.html'">
+        <img class="projectCell-image" src="./gifs/dino-nn.png"
+            onclick="window.location.href = '../projects/dino-nn/index.html'">
+        <p class="projectCell-tech">p5.js, JavaScript</p>
+    </div>
+    <div class="projectCell">
+        <div class="projectCell-text">
+            <h1 onclick="window.location.href = '../projects/city/index.html'">CityScape</h1>
+            <p>Computer-generated scene of a busy city with hand-drawn sprites in a pixel-art style. Dynamically adjusts
+                lighting based on your local time</p>
+        </div>
+        <img class="projectCell-image" src="./gifs/city.gif"
+            onclick="window.location.href = '../projects/city/index.html'">
         <p class="projectCell-tech">Pixel art, p5.js, JavaScript</p>
     </div>
     <div class="projectCell">
         <div class="projectCell-text">
             <h1 onclick="window.location.href = '../projects/silos/index.html'">Silos</h1>
-            <p>A platformer with fully implemented collision, physics, animations, and map editor. All game logic was made with javascript.</p>
+            <p>A platformer with fully implemented collision, physics, animations, and map editor. All game logic was
+                made with javascript.</p>
         </div>
-        <img class="projectCell-image" src="./gifs/silos.gif" onclick="window.location.href = '../projects/silos/index.html'">
+        <img class="projectCell-image" src="./gifs/silos.gif"
+            onclick="window.location.href = '../projects/silos/index.html'">
         <p class="projectCell-tech">Pixel art, p5.js, JavaScript</p>
     </div>
     <div class="projectCell">
@@ -80,7 +100,8 @@
             <h1 onclick="window.location.href = '../projects/monipix/index.html'">MoniPix</h1>
             <p>An online drawing tool that allows you to create simple pixel art and download them as a .png file.</p>
         </div>
-        <img class="projectCell-image" src="./gifs/monipix.gif" onclick="window.location.href = '../projects/monipix/index.html'">
+        <img class="projectCell-image" src="./gifs/monipix.gif"
+            onclick="window.location.href = '../projects/monipix/index.html'">
         <p class="projectCell-tech">HTML, CSS, P5.js, JavaScript</p>
     </div>
     <div class="projectCell">
@@ -88,31 +109,40 @@
             <h1 onclick="window.location.href = '../projects/outrun/index.html'">Outrun the Wave</h1>
             <p>Procedurally generated 3d terrain with Perlin noise that reacts to the music.</p>
         </div>
-        <img class="projectCell-image" src="./gifs/outrun.gif" onclick="window.location.href = '../projects/outrun/index.html'">
+        <img class="projectCell-image" src="./gifs/outrun.gif"
+            onclick="window.location.href = '../projects/outrun/index.html'">
         <p class="projectCell-tech">WebGL, p5.js, JavaScript</p>
     </div>
     <div class="projectCell">
         <div class="projectCell-text">
             <h1 onclick="window.location.href = '../projects/planets/index.html'">Planets</h1>
-            <p>A simple physics simulation that uses Gravity Equation to calculate velocity and acceleration of the planets to each other on a 2d plane.<p>
+            <p>A simple physics simulation that uses Gravity Equation to calculate velocity and acceleration of the
+                planets to each other on a 2d plane.
+            <p>
         </div>
-        <img class="projectCell-image" src="./gifs/planets.gif" onclick="window.location.href = '../projects/planets/index.html'">
+        <img class="projectCell-image" src="./gifs/planets.gif"
+            onclick="window.location.href = '../projects/planets/index.html'">
         <p class="projectCell-tech">P5.js, Javascript</p>
     </div>
     <div class="projectCell">
         <div class="projectCell-text">
             <h1 onclick="window.location.href = '../projects/stray-ships/index.html'">Stray Ships</h1>
-            <p>Using an algorith, ships try to avoid colliding with each other and the asteroids, every time ship hits an asteroid it dies. Ships have randomized turning speed and maximum velocity. Only the fastest survive!</p>
+            <p>Using an algorith, ships try to avoid colliding with each other and the asteroids, every time ship hits
+                an asteroid it dies. Ships have randomized turning speed and maximum velocity. Only the fastest survive!
+            </p>
         </div>
-        <img class="projectCell-image" src="./statics/ships.png" onclick="window.location.href = '../projects/stray-ships/index.html'">
+        <img class="projectCell-image" src="./statics/ships.png"
+            onclick="window.location.href = '../projects/stray-ships/index.html'">
         <p class="projectCell-tech">P5.js, JavaScript</p>
     </div>
     <div class="projectCell">
         <div class="projectCell-text">
             <h1 onclick="window.location.href = '../projects/convey/index.html'">Convey</h1>
-            <p>A conveyer demo where you can play around with different conveyor paths and watch items be carried away.</p>
+            <p>A conveyer demo where you can play around with different conveyor paths and watch items be carried away.
+            </p>
         </div>
-        <img class="projectCell-image" src="./statics/convey.png" onclick="window.location.href = '../projects/convey/index.html'">
+        <img class="projectCell-image" src="./statics/convey.png"
+            onclick="window.location.href = '../projects/convey/index.html'">
         <p class="projectCell-tech">P5.js, JavaScript</p>
     </div>
     <div class="projectCell">
@@ -120,7 +150,8 @@
             <h1 onclick="window.location.href = '../projects/stray-ships-two/index.html'">Stray Ships 2</h1>
             <p>A more efficiently recoded stray ships, but with twice the lazers and tripple the action.</p>
         </div>
-        <img class="projectCell-image" src="./statics/ships2.png" onclick="window.location.href = '../projects/stray-ships-two/index.html'">
+        <img class="projectCell-image" src="./statics/ships2.png"
+            onclick="window.location.href = '../projects/stray-ships-two/index.html'">
         <p class="projectCell-tech">P5.js, JavaScript</p>
     </div>
     <div class="projectCell">
@@ -128,7 +159,8 @@
             <h1 onclick="window.location.href = '../projects/gif_maker/index.html'">Gif maker</h1>
             <p>An online tool for GIF file creation</p>
         </div>
-        <img class="projectCell-image" src="./statics/gif-maker.jpeg" onclick="window.location.href = '../projects/stray-ships-two/index.html'">
+        <img class="projectCell-image" src="./statics/gif-maker.jpeg"
+            onclick="window.location.href = '../projects/stray-ships-two/index.html'">
         <p class="projectCell-tech">JavaScript, HTML, CSS</p>
     </div>
 
