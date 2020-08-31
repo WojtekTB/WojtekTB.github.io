@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Genetic algorith - Image to Picture</title>
+  <style>
+    .col {
+      width: 25vw;
+      font-size: 0.8vw;
+      padding: 50px;
+      /* border-style: groove; */
+    }
+  </style>
+</head>
+
+<script src="https://cdn.jsdelivr.net/npm/p5@1.0.0/lib/p5.js"></script>
+<link rel="stylesheet" href="//cdn.jsdelivr.net/chartist.js/latest/chartist.min.css" />
+<script src="//cdn.jsdelivr.net/chartist.js/latest/chartist.min.js"></script>
+<script src="./sketch.js"></script>
+<script src="./population.js"></script>
+<script src="./element.js"></script>
+<script src="./graph.js"></script>
+
+<body>
+  <div id="col" style="float: left; padding: 5vw;">
+    <h2>Generation:</h2>
+    <h2 style="font-weight: 10; white-space: pre-line;" id="generationNum">
+      #
+    </h2>
+    <h2>Number of improvements:</h2>
+    <h2 style="font-weight: 10; white-space: pre-line;" id="improvNum">
+      #
+    </h2>
+    <h2>Best fitness so far:</h2>
+    <h2 style="font-weight: 10; white-space: pre-line;" id="bestFit">
+      #
+    </h2>
+    <h2>Current generation mutation fitness:</h2>
+    <h2 style="font-weight: 10; white-space: pre-line;" id="mutationFit">
+      #
+    </h2>
+    <h2>Fitness chart:</h2>
+    <div class="ct-chart ct-perfect-fourth" style="width: 45vw;"></div>
+  </div>
+
+  <div id="col" style="float: left; padding-top: 5vh;">
+    <div style="max-width: 45vw;" id="myCanvas"></div>
+    <img src="./mona-lisa-resized.jpg" id="actualImage" style="width: 200px" />
+    <div>
+      <label for="imageToEmulate" style="display: block; font-size: 1.5vw;">Choose a picture:</label>
+      <input type="file" accept="image/png, image/jpeg" name="imageToEmulate" id="imageToEmulate"
+      onchange="loadNewPicture();">
+    </div>
+    <div>
+      <label style="display: block; font-size: 1.5vw;">Controls:</label>
+      <button onclick="stop();">stop</button>
+      <button onclick="begin();">begin</button>
+      <button onclick="draw();">next</button>
+    </div>
+    <div>
+      <input type="checkbox" id="saveCheckBox" onclick="toggleSaveItter(this);">
+      <label for="saveCheckBox">Save every 5000th iteration</label>
+    </div>
+    <div>
+      <button onclick="saveManual();">Download current iteration</button>
+    </div>
+  </div>
+</body>
+
+<script>
+  var saveCanvasIteration = false;
+  function toggleSaveItter(e) {
+    saveCanvasIteration = e.checked;
+  }
+  function saveManual() {
+    saveCanvas("Generation_" + population.genNumber, "png");
+  }
+</script>
+
+</html>
