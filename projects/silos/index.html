@@ -1,28 +1,45 @@
 <!DOCTYPE html>
 <html lang="">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Silos</title>
-    <style>
-      #mainSketch {
-        position: fixed;
-        left: 0px;
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Silos</title>
+  <style>
+    /* #mainCanvas {
+        position: absolute;
         top: 0px;
-      }
-    </style>
-    <script src="./javascript/p5/p5.js"></script>
-    <script src="./javascript/sketch.js"></script>
-    <script src="./javascript/PlayerClass.js"></script>
-    <script src="./javascript/MapClass.js"></script>
-    <script src="./javascript/CollisionClass.js"></script>
-    <script src="./javascript/Hud.js"></script>
-    <script src="./javascript/particles.js"></script>
-    <script src="./javascript/NPC.js"></script>
-    <script src="./javascript/StageBuilder.js"></script>
-    <script src="./javascript/PlayerAbilities.js"></script>
-    <script src="./javascript/Dialogue.js"></script>
-  </head>
-  <div id="mainSketch"></div>
-  <body></body>
+        left: 0px;
+    }  */
+
+    body {
+      margin: 0;
+      padding: 0;
+      overflow: hidden;
+    }
+
+    canvas {
+      margin: auto;
+    }
+  </style>
+  <script src="https://cdn.jsdelivr.net/npm/p5@1.0.0/lib/p5.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/1.4.5/socket.io.min.js"></script>
+
+  <script src="./javascript/sketch.js"></script>
+  <script src="./javascript/Chat.js"></script>
+  <script src="./javascript/PlayerClass.js"></script>
+  <script src="./javascript/MapClass.js"></script>
+  <script src="./javascript/CollisionClass.js"></script>
+  <script src="./javascript/Hud.js"></script>
+  <script src="./javascript/particles.js"></script>
+  <script src="./javascript/NPC.js"></script>
+  <script src="./javascript/StageBuilder.js"></script>
+  <script src="./javascript/PlayerAbilities.js"></script>
+  <script src="./javascript/Dialogue.js"></script>
+  <script src="./javascript/HurtBox.js"></script>
+</head>
+
+<body>
+</body>
+
 </html>
