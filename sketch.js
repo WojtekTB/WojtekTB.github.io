@@ -48,6 +48,7 @@ function setup() {
   }
   speedGraph = new drawGraph("#FF0000", 2, 230, 0.5, 2);
   rotationGraph = new drawGraph("#0000ff", 2, 230, 2, 5);
+  updateTrail();
 }
 
 function updateTrail() {
