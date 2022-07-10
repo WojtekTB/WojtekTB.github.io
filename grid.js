@@ -21,6 +21,8 @@ class Grid{
                         this.grid[y][x].splice(i, 1);
                         continue;
                     }
+                    // let newGridX = max(0, min(birdOnGrid.getGridX(), this.grid[0].length));
+                    // let newGridY = max(0, min(birdOnGrid.getGridY(), this.grid.length));
                     let newGridX = birdOnGrid.getGridX();
                     let newGridY = birdOnGrid.getGridY();
                     if(newGridX !== birdOnGrid.previousGridX || newGridY !== birdOnGrid.previousGridY){
@@ -39,27 +41,27 @@ class Grid{
             return this.nearMap.get(mapKey);
         }
         let itemsInArea = this.grid[item.previousGridY][item.previousGridX];
-        if(this.previousGridY - 1 > 0){
+        if(item.previousGridY - 1 >= 0){
             itemsInArea = itemsInArea.concat(this.grid[item.previousGridY - 1][item.previousGridX]);
         }
-        if(this.previousGridY + 1 < this.grid.length){
+        if(item.previousGridY + 1 < this.grid.length){
             itemsInArea = itemsInArea.concat(this.grid[item.previousGridY + 1][item.previousGridX]);
         }
-        if(this.previousGridX - 1 > 0){
+        if(item.previousGridX - 1 >= 0){
             itemsInArea = itemsInArea.concat(this.grid[item.previousGridY][item.previousGridX - 1]);
-            if(this.previousGridY - 1 > 0){
+            if(item.previousGridY - 1 >= 0){
                 itemsInArea = itemsInArea.concat(this.grid[item.previousGridY - 1][item.previousGridX - 1]);
             }
-            if(this.previousGridY + 1 < this.grid.length){
+            if(item.previousGridY + 1 < this.grid.length){
                 itemsInArea = itemsInArea.concat(this.grid[item.previousGridY + 1][item.previousGridX - 1]);
             }
         }
-        if(this.previousGridX + 1 > this.grid[item.previousGridY].length){
+        if(item.previousGridX + 1 < this.grid[item.previousGridY].length){
             itemsInArea = itemsInArea.concat(this.grid[item.previousGridY][item.previousGridX + 1]);
-            if(this.previousGridY - 1 > 0){
+            if(item.previousGridY - 1 >= 0){
                 itemsInArea = itemsInArea.concat(this.grid[item.previousGridY - 1][item.previousGridX + 1]);
             }
-            if(this.previousGrid + 1 < this.grid.length){
+            if(item.previousGridY + 1 < this.grid.length){
                 itemsInArea = itemsInArea.concat(this.grid[item.previousGridY + 1][item.previousGridX + 1]);
             }
         }

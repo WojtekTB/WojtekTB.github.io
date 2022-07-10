@@ -28,12 +28,8 @@ class Bird {
       this.previousGridY = this.getGridY();
       if (this.alive) {
         this.rotateTowards(this.rotationSpeed, mouseX, mouseY);
-        // for (let i = 0; i < birds.length; i++) {
-        //   this.rotateFrom(this.rotationSpeed / 2, 50, birds[i].x, birds[i].y);
-        //   birds[i].rotateFrom(birds[i].rotationSpeed / 2, 50, this.x, this.y);
-        // }
-
         let nearAsteroids = asteroidGrid.getItemsInArea(this);
+        // console.log(nearAsteroids.length)
         for (let i = 0; i < nearAsteroids.length; i++) {
           let distance = this.rotateFrom(
             this.rotationSpeed * 4,
@@ -103,15 +99,6 @@ class Bird {
       if (Math.abs(distanceToObject) > distanceOfRepultion) {
         return distanceToObject;
       } else {
-        // if (Math.random() > 0.5) {
-        //   this.angle += this.rotationSpeed;
-        //   this.calcAcceleration(this.speed / 10);
-        //   this.move();
-        // } else {
-        //   this.angle -= this.rotationSpeed;
-        //   this.calcAcceleration(this.speed / 10);
-        //   this.move();
-        // }
         let rateOfChange = rateOfChange_;
         let neededAngle = getAngleDeg(x, y, this.x, this.y);
         let deltaX = x - this.x;

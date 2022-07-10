@@ -28,15 +28,16 @@ class Asteroid {
     }
   
     getGridX(){
-      return Math.floor((this.x + this.overallSize * 5)/gridSize);
+      return Math.floor((this.x)/gridSize);
     }
     getGridY(){
-      return Math.floor((this.y + this.overallSize * 5)/gridSize);
+      return Math.floor((this.y)/gridSize);
     }
   
     run() {
       this.render();
       this.move();
+      // console.log(this.getGridX() + " " + this.getGridY())
     }
   
     render() {
@@ -54,15 +55,15 @@ class Asteroid {
     move() {
       this.x += this.vx;
       this.y += this.vy;
-      if (this.x > innerWidth + this.overallSize * 5) {
-        this.x = -(this.overallSize * 5);
-      } else if (this.x < -(this.overallSize * 5)) {
-        this.x = innerWidth + this.overallSize * 5;
+      if (this.x > innerWidth) {
+        this.x = 0;
+      } else if (this.x < 0) {
+        this.x = innerWidth;
       }
-      if (this.y > innerHeight + this.overallSize * 5) {
-        this.y = -(this.overallSize * 5);
-      } else if (this.y < -(this.overallSize * 5)) {
-        this.y = innerHeight + this.overallSize * 5;
+      if (this.y > innerHeight) {
+        this.y = 0;
+      } else if (this.y < 0) {
+        this.y = innerHeight;
       }
     }
   }

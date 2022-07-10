@@ -26,12 +26,19 @@ function setup() {
   gridSize = Math.max(150, Math.floor(innerWidth > innerHeight? innerHeight/10:innerWidth/10));
   // create grid
   birdGrid = new Grid(Math.ceil(innerWidth/gridSize), Math.ceil(innerHeight/gridSize), (bird)=>{ return !bird.alive;});
-  asteroidGrid = new Grid(Math.ceil(innerWidth/gridSize) + 1, Math.ceil(innerHeight/gridSize) + 1, ()=>{return false;});
+  asteroidGrid = new Grid(Math.ceil(innerWidth/gridSize), Math.ceil(innerHeight/gridSize), ()=>{return false;});
 
   angleMode(DEGREES);
   canvas = createCanvas(innerWidth, innerHeight);
   canvas.parent("mainSketch");
-  for (let i = 0; i < 12; i++) {
+  let numOfAsteroids = 24;
+  let numOfBirds = 100;
+  if( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ) {
+    // if mobile, half it
+    numOfBirds /= 2;
+    numOfAsteroids /= 2;
+  }
+  for (let i = 0; i < numOfAsteroids; i++) {
     asteroids.push(
       new Asteroid(
         random(0, innerWidth),
@@ -40,11 +47,6 @@ function setup() {
         random(-1, 1)
       )
     );
-  }
-  let numOfBirds = 100;
-  if( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ) {
-    // if mobile, half it
-    numOfBirds /= 2;
   }
   for (let i = 0; i < numOfBirds; i++) {
     birds.push(
@@ -69,8 +71,13 @@ function updateTrail() {
 }
 
 function draw() {
+
   // fill(255, 0, 0);
-  // rect(0, 0, gridSize, gridSize);
+  // for(let y = asteroidGrid.grid.length - 1; y >= 0; y--){
+  //   for(let x = asteroidGrid.grid[y].length - 1; x >= 0; x--){
+  //     rect(x * gridSize, y * gridSize, gridSize, gridSize);
+  //   }
+  // }
 
   if (width != innerWidth || height != innerHeight) {
     resizeCanvas(innerWidth, innerHeight);
@@ -115,15 +122,27 @@ function processGraphs(){
 }
 
 function mousePressed() {
-  birds.push(
-    new Bird(
-      mouseX,
-      mouseY,
-      random(0, 360),
-      random(2, 5), //rotation speed
-      random(0.5, 2) //speed
-    )
-  );
+  if(mouseButton == LEFT){
+    birds.push(
+      new Bird(
+        mouseX,
+        mouseY,
+        random(0, 360),
+        random(2, 5), //rotation speed
+        random(0.5, 2) //speed
+      )
+    );
+  }
+  else{
+    asteroids.push(
+      new Asteroid(
+        mouseX,
+        mouseY,
+        random(-1, 1),
+        random(-1, 1)
+      )
+    );
+  }
 }
 
 function StatsCliked() {
