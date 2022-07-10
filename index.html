@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+
 <style>
   #statsCheck {
     position: fixed;
@@ -121,8 +122,12 @@
   }
 </style>
 <title>Vadim Kim's Website</title>
-<script src="./p5/p5.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/p5@1.4.1/lib/p5.js"></script>
 <script src="./sketch.js"></script>
+<script src="./grid.js"></script>
+<script src="./bird.js"></script>
+<script src="./asteroid.js"></script>
+<script src="./graph.js"></script>
 
 <body>
   <div id="mainSketch"></div>
@@ -136,9 +141,9 @@
     <label
       for="scales"
       style="color: aliceblue;
-                      font-size: 14px;
-                      text-decoration: none;
-                      font-family: 'Courier New', Courier, monospace"
+    font-size: 14px;
+    text-decoration: none;
+    font-family: 'Courier New', Courier, monospace"
       >Cool Stats</label
     >
     <input
@@ -152,9 +157,9 @@
     <label
       for="slider"
       style="color: aliceblue;
-                      font-size: 14px;
-                      text-decoration: none;
-                      font-family: 'Courier New', Courier, monospace"
+    font-size: 14px;
+    text-decoration: none;
+    font-family: 'Courier New', Courier, monospace"
       >Trails</label
     >
   </div>

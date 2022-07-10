@@ -6,10 +6,59 @@
     top: 5px;
   }
   #mainSketch {
-    position: absolute;
+    position: fixed;
     left: 0px;
     top: 0px;
-    z-index: -1;
+  }
+  #Resume-Button {
+    width: 10vw;
+    background-color: Transparent;
+    outline-color: transparent;
+    border: 2px solid whitesmoke;
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+    font-family: "Courier New", Courier, monospace;
+  }
+  #Project-Button {
+    width: 10vw;
+    background-color: Transparent;
+    outline-color: transparent;
+    border: 2px solid whitesmoke;
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+    font-family: "Courier New", Courier, monospace;
+  }
+
+  #websiteTitle {
+    position: fixed;
+    left: 27.5vw;
+    top: 37.5vh;
+    width: 45vw;
+    /* margin: 0px; */
+  }
+  #avatarImage {
+    width: 10vw;
+    margin-top: 0px;
+    transform: translateY(70%);
+    margin: 20px;
+    -webkit-filter: drop-shadow(1px 1px 0 white) drop-shadow(-1px -1px 0 white);
+    filter: drop-shadow(1px 1px 0 white) drop-shadow(-1px -1px 0 white);
+  }
+  #allignmentContainer {
+    position: fixed;
+    left: 33vw;
+    top: 35vh;
+    display: inline-block;
   }
   #slider {
     direction: rtl;
@@ -18,15 +67,22 @@
     -khtml-user-select: none;
     -moz-user-select: none;
     -ms-user-select: none;
-    user-select: none;
+    xuser-select: none;
   }
 </style>
-<title>Vadim Kim's Website</title>
-<script src="../../p5/p5.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/p5@1.4.1/lib/p5.js"></script>
 <script src="../../sketch.js"></script>
-
-<body>
-  <div id="mainSketch"></div>
+<script src="../../grid.js"></script>
+<script src="../../bird.js"></script>
+<script src="../../asteroid.js"></script>
+<script src="../../graph.js"></script>
+<div id="mainSketch">
+  <!-- <div id="allignmentContainer">
+    <img id="websiteTitle" src="vadim kim website.png" />
+    <button id="Resume-Button">Resume</button>
+    <img id="avatarImage" src="avatar.png" />
+    <button id="Project-Button">Projects</button>
+  </div> -->
   <div id="statsCheck">
     <input
       onclick="StatsCliked();"
@@ -37,26 +93,28 @@
     <label
       for="scales"
       style="color: aliceblue;
-                      font-size: 14px;
-                      text-decoration: none;
-                      font-family: 'Courier New', Courier, monospace"
+    font-size: 14px;
+    text-decoration: none;
+    font-family: 'Courier New', Courier, monospace"
       >Cool Stats</label
     >
     <input
       type="range"
-      min="1"
-      max="254"
-      value="60"
+      min="50"
+      max="255"
+      value="254"
       id="slider"
       onchange="updateTrail();"
     />
     <label
       for="slider"
       style="color: aliceblue;
-                      font-size: 14px;
-                      text-decoration: none;
-                      font-family: 'Courier New', Courier, monospace"
+    font-size: 14px;
+    text-decoration: none;
+    font-family: 'Courier New', Courier, monospace"
       >Trails</label
     >
   </div>
-</body>
+  <head></head>
+  <body></body>
+</div>
